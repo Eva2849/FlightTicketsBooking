@@ -20,7 +20,7 @@ public class WebSecurityConfig {
     public UserDetailsManager getUserDetailsService(DataSource dataSource) {
         UserDetails admin = User.builder()
                 .username("admin")
-                .password("$2a$10$QgcqI.FMy8Z73QH1Fk/Eqeix.oBu41ejFnDwSOrgtG4IHG9fInHIm")
+                .password("$2a$12$DLThbd1pGAEQ7KQ5XQPdOu.ZDicEV2AAvg5IEsPA.GlY.PJlXL9S2")
                 .roles("ADMIN", "USER")
                 .build();
         var jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
