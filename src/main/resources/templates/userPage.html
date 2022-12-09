@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Flights</title>
+</head>
+<body>
+<nav>
+    <menu>
+        <li><a th:href="@{/}">Home page</a></li>
+        <li sec:authorize="hasRole('USER')">
+            <a th:href="@{/userPage}">User page</a></li>
+        <li sec:authorize="hasRole('ADMIN')">
+            <a th:href="@{/adminPage}">Admin page</a></li>
+        <li sec:authorize="isAnonymous()">
+            <a th:href="@{/registration}">Registration</a></li>
+        <li sec:authorize="isAnonymous()">
+            <a th:href="@{/login}">Login</a></li>
+        <li sec:authorize="isAuthenticated()">
+            Welcome <span sec:authentication="name"></span>!
+        </li>
+        <li sec:authorize="isAuthenticated()">
+            <a th:href="@{/logout}">Logout</a></li>
+    </menu>
+</nav>
+<h1 style="color: green">User page</h1>
+
+</body>
+</html>

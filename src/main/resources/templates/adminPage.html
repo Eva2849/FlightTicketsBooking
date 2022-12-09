@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Flights</title>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+
+        table, td, th {
+            border: 1px solid black;
+        }
+
+        td, th {
+            margin: 8px;
+        }
+    </style>
+</head>
+<body>
+<nav>
+    <menu>
+        <li><a th:href="@{/}">Home page</a></li>
+        <li sec:authorize="hasRole('USER')">
+            <a th:href="@{/userPage}">User page</a></li>
+        <li sec:authorize="hasRole('ADMIN')">
+            <a th:href="@{/adminPage}">Admin page</a></li>
+        <li sec:authorize="isAnonymous()">
+            <a th:href="@{/registration}">Registration</a></li>
+        <li sec:authorize="isAnonymous()">
+            <a th:href="@{/login}">Login</a></li>
+        <li sec:authorize="isAuthenticated()">
+            Welcome <span sec:authentication="name"></span>!
+        </li>
+        <li sec:authorize="isAuthenticated()">
+            <a th:href="@{/logout}">Logout</a></li>
+    </menu>
+</nav>
+<h1 style="color: lavender">Admin page</h1>
+<h1>Create new flight:</h1>
+<div>
+    <div>
+        <label for="flightNumber">Flight number: </label>
+        <input type="text" id="flightNumber" name="flightNumber">
+    </div>
+    <div>
+        <label for="departureDate">Departure date: </label>
+        <input type="text" id="departureDate" name="departureDate">
+    </div>
+    <div>
+        <label for="time">Time: </label>
+        <input type="number" id="time" name="time">
+    </div>
+    <div>
+        <label for="origin">Origin: </label>
+        <input type="text" id="origin" name="origin">
+    </div>
+    <div>
+        <label for="destination">Destination: </label>
+        <input type="text" id="destination" name="destination">
+    </div>
+    <div>
+        <label for="estFlightDuration">Flight duration: </label>
+        <input type="text" id="estFlightDuration" name="estFlightDuration">
+    </div>
+    <div>
+        <label for="maxNumSeats">Capacity: </label>
+        <input type="text" id="maxNumSeats" name="maxNumSeats">
+    </div>
+    <div>
+        <label for="users">User: </label>
+        <select name="users" id="users"></select>
+    </div>
+    <div>
+        <input type="submit" id="save"/>
+    </div>
+</div>
+
+<h1>Create new user:</h1>
+<div>
+    <div>
+        <label for="login">Login: </label>
+        <input type="text" id="login" name="login">
+    </div>
+    <div>
+        <label for="password">Password: </label>
+        <input type="text" id="password" name="password">
+    </div>
+    <div>
+        <label for="firstName">First name: </label>
+        <input type="text" id="firstName" name="firstName">
+    </div>
+    <div>
+        <label for="lastName">Last name: </label>
+        <input type="text" id="lastName" name="lastName">
+    </div>
+    <div>
+        <label for="birthDate">Date of birth: </label>
+        <input type="text" id="birthDate" name="birthDate">
+    </div>
+    <div>
+        <label for="gender">Gender: </label>
+        <input type="text" id="gender" name="gender">
+    </div>
+    <div>
+        <input type="submit" id="userSave"/>
+    </div>
+</div>
+
+<h2>Flights table:</h2>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Flight number</th>
+        <th>Departure date</th>
+        <th>Time</th>
+        <th>Origin</th>
+        <th>Destination</th>
+        <th>Flight duration</th>
+        <th>Max number of seats</th>
+    </tr>
+    </thead>
+    <tbody id="Flights-table"></tbody>
+</table>
+
+<h2>Users table:</h2>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Login</th>
+        <th>Password</th>
+        <th>First name</th>
+        <th>Last name</th>
+        <th>Date of birth</th>
+        <th>Gender</th>
+    </tr>
+    </thead>
+    <tbody id="Users-table"></tbody>
+</table>
+<script>
+    const baseURI = 'http://localhost:8080/adminPage/api/v1';
+    const flightsTable = document.getElementById('Flights-table');
+    const saveFlightButton = document.getElementById('save');
+
+    const usersTable = document.getElementById('Users-table');
+    const saveUserButton = document.getElementById('userSave');
+
+    function addFlight(flight) {
+        const tr = document.createElement('tr');
+        for (const prop in flight) {
+            const td = document.createElement('td');
+            if (prop === 'user') {
+                td.append(document.createTextNode(flight[prop].name));
+            } else {
+                td.append(document.createTextNode(flight[prop]));
+            }
+            tr.append(td);
+        }
+        flightsTable.append(tr);
+    }
+
+    function addUser(user) {
+        const tr = document.createElement('tr');
+        for (const prop in user) {
+            const td = document.createElement('td');
+            td.append(document.createTextNode(user[prop]));
+            tr.append(td);
+        }
+        usersTable.append(tr);
+    }
+
+    function fillTableFlights(flights) {
+        flightsTable.innerHTML = '';
+        flights.forEach(flight => {
+            addFlight(flight);
+        });
+    }
+
+    function fillTableUsers(users) {
+        usersTable.innerHTML = '';
+        users.forEach(user => {
+            addUser(user);
+        });
+    }
+
+    function fillUsers(users) {
+        const userSelect = document.getElementById('users');
+        users.forEach(user => {
+            const option = document.createElement('option');
+            option.value = user.id;
+            option.append(document.createTextNode(user.name));
+            userSelect.append(option);
+        });
+    }
+
+    async function loadFlights() {
+        const response = await fetch(`${baseURI}/flights`, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+        const flights = await response.json();
+        console.log(flights);
+        fillTableFlights(flights);
+    }
+
+    async function loadUsers() {
+        const response = await fetch(`${baseURI}/users`, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+        const users = await response.json();
+        console.log(users);
+        fillTableUsers(users)
+        fillUsers(users);
+    }
+
+    window.addEventListener('load', loadFlights);
+    window.addEventListener('load', loadUsers);
+
+    async function saveFlight() {
+        const flightNumberInput = document.getElementById('flightNumber');
+        const departureDateInput = document.getElementById('departureDate');
+        const timeInput = document.getElementById('time');
+        const originInput = document.getElementById('origin');
+        const destinationInput = document.getElementById('destination');
+        const estFlightDurationInput = document.getElementById('estFlightDuration');
+        const maxNumSeatsInput = document.getElementById('maxNumSeats');
+        const usersSelect = document.getElementById('users');
+
+        const flight = {
+            flightNumber: flightNumberInput.value,
+            departureDate: departureDateInput.value,
+            time: timeInput.value,
+            origin: originInput.value,
+            destination: destinationInput.value,
+            estFlightDuration: estFlightDurationInput.value,
+            maxNumSeats: maxNumSeatsInput.value,
+            usersId: usersSelect.value
+        };
+        const response = await fetch(`${baseURI}/flights`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(flight)
+        });
+        console.log(response.status);
+        if (response.status === 201) {
+            const loc = response.headers.get('location');
+            const resp = await fetch(`http://localhost:8080${loc}`)
+            addFlight(await resp.json())
+        } else {
+            alert('Error: ' + response.status);
+        }
+    }
+
+    async function saveUser() {
+        const loginInput = document.getElementById('login');
+        const passwordInput = document.getElementById('password');
+        const firstNameInput = document.getElementById('firstName');
+        const lastNameInput = document.getElementById('lastName');
+        const birthDateInput = document.getElementById('birthDate');
+        const genderInput = document.getElementById('gender');
+
+        const user = {
+            login: loginInput.value,
+            password: passwordInput.value,
+            firstName: firstNameInput.value,
+            lastName: lastNameInput.value,
+            birthDate: birthDateInput.value,
+            gender: genderInput.value
+        };
+
+        const response = await fetch(`${baseURI}/users`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        });
+
+        console.log(response.status);
+        if (response.status === 201) {
+            const loc = response.headers.get('location');
+            const resp = await fetch(`http://localhost:8080${loc}`)
+            addUser(await resp.json())
+        } else {
+            alert('Error: ' + response.status);
+        }
+    }
+
+    saveFlightButton.addEventListener('click', saveFlight);
+    saveUserButton.addEventListener('click', saveUser);
+
+</script>
+</body>
+</html>
