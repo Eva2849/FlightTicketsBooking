@@ -1,5 +1,6 @@
 package com.itstep.flightticketsbooking.controller;
 
+import com.itstep.flightticketsbooking.repository.UserRepository;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;
@@ -17,8 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 public class RegistrationController {
 
-    private final PasswordEncoder passwordEncoder;
-    private final UserDetailsManager userDetailsManager;
+    private final UserRepository userRepository;
 
     @GetMapping
     String index() {
@@ -34,12 +34,7 @@ public class RegistrationController {
     @PostMapping
         // <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/> обязательное поле для Post запроса
     String registration(@ModelAttribute com.itstep.flightticketsbooking.controller.RegistrationController.UsernamePassword usernamePassword) {
-        UserDetails user = User.builder()
-                .username(usernamePassword.username)
-                .password(passwordEncoder.encode(usernamePassword.password))
-                .roles("USER")
-                .build();
-        userDetailsManager.createUser(user);
-        return "redirect:/login";
+        throw new RuntimeException("Not implemented yet");
+//        return "redirect:/login";
     }
 }
