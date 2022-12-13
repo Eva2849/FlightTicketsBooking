@@ -21,13 +21,12 @@
 <nav>
     <menu>
         <li><a th:href="@{/}">Home page</a></li>
-        <li><a th:href="@{/privatePage}">Private page</a></li>
         <li sec:authorize="hasRole('USER')">
             <a th:href="@{/userPage}">User page</a></li>
         <li sec:authorize="hasRole('ADMIN')">
             <a th:href="@{/adminPage}">Admin page</a></li>
         <li sec:authorize="isAnonymous()">
-            <a th:href="@{/singup}">Sing Up</a></li>
+            <a th:href="@{/registation}">Registration</a></li>
         <li sec:authorize="isAnonymous()">
             <a th:href="@{/login}">Login</a></li>
         <li sec:authorize="isAuthenticated()">

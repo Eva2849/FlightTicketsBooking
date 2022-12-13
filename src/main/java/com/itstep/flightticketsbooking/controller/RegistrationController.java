@@ -1,7 +1,11 @@
 package com.itstep.flightticketsbooking.controller;
 
+import com.itstep.flightticketsbooking.entity.Role;
+import com.itstep.flightticketsbooking.repository.RoleRepository;
+import com.itstep.flightticketsbooking.repository.UserRepository;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,12 +17,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/registration") //регистрация
+@RequestMapping("/registration")
 @RequiredArgsConstructor
 public class RegistrationController {
 
     private final PasswordEncoder passwordEncoder;
-    private final UserDetailsManager userDetailsManager;
+    private final UserRepository userRepository;
 
     @GetMapping
     String index() {
@@ -32,14 +36,13 @@ public class RegistrationController {
     }
 
     @PostMapping
-        // <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/> обязательное поле для Post запроса
-    String registration(@ModelAttribute com.itstep.flightticketsbooking.controller.RegistrationController.UsernamePassword usernamePassword) {
-        UserDetails user = User.builder()
+    String registration(@ModelAttribute UsernamePassword usernamePassword) {
+        UserDetails userDetails = User.builder()
                 .username(usernamePassword.username)
                 .password(passwordEncoder.encode(usernamePassword.password))
                 .roles("USER")
                 .build();
-        userDetailsManager.createUser(user);
+//        userRepository.save(user);
         return "redirect:/login";
     }
 }

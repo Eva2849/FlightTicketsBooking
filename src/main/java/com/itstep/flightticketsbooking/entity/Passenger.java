@@ -35,8 +35,9 @@ public class Passenger {
     private LocalDate birthDate;
 
     @NonNull
+    @Enumerated(EnumType.STRING)
     @Column(name = "gender")
-    private String gender;
+    private Gender gender;
 
     @ManyToOne
     private User user;
