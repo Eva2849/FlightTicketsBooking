@@ -55,8 +55,8 @@
     <tr th:each="flight: ${flights}">
         <td th:text="${flight.id}"></td>
         <td th:text="${flight.flightNumber}"></td>
-        <td th:text="${flight.departureDate}"></td>
-        <td th:text="${flight.time}"></td>
+        <td th:text="${flight.departureDate.toLocalDate()}"></td>
+        <td th:text="${flight.departureDate.toLocalTime()}"></td>
         <td th:text="${flight.origin}"></td>
         <td th:text="${flight.destination}"></td>
         <td th:text="${flight.estFlightDuration}"></td>
