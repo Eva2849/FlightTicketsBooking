@@ -14,7 +14,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Time;
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.Properties;
 
@@ -42,9 +44,9 @@ public class InitData implements CommandLineRunner {
         user.addRole(adminRole);
         userRepository.save(user);
 
-        Flight fl1 = new Flight("LO3880",LocalDate.of(2022,Month.DECEMBER,4), Time.valueOf("15:50"),"Dnipro","Riga",Time.valueOf("01:50"),200);
-        Flight fl2 = new Flight("W61091",LocalDate.of(2022,Month.DECEMBER,4), Time.valueOf("14:50"),"Dnipro","London",Time.valueOf("01:50"),80);
-        Flight fl3 = new Flight("W61011",LocalDate.of(2022,Month.DECEMBER,4), Time.valueOf("12:50"),"Dnipro","Mombasa",Time.valueOf("01:50"),60);
+        Flight fl1 = new Flight("LO3880", LocalDateTime.of(2022, Month.DECEMBER, 4, 0, 0), "Dnipro", "Riga", Duration.ofHours(1), 200);
+        Flight fl2 = new Flight("W61091", LocalDateTime.of(2022, Month.DECEMBER, 4, 0, 0), "Dnipro", "London", Duration.ofHours(1), 80);
+        Flight fl3 = new Flight("W61011", LocalDateTime.of(2022, Month.DECEMBER, 4, 0, 0), "Dnipro", "Mombasa", Duration.ofHours(1), 60);
 
         flightRepository.save(fl1);
         flightRepository.save(fl2);

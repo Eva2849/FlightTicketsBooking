@@ -5,7 +5,9 @@ import javax.persistence.*;
 import lombok.*;
 
 import java.sql.Time;
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @AllArgsConstructor
@@ -24,11 +26,7 @@ public class Flight {
 
     @NonNull
     @Column(name = "departureDate")
-    private LocalDate departureDate;
-
-    @NonNull
-    @Column(name = "time")
-    private Time time;
+    private LocalDateTime departureDate;
 
     @NonNull
     @Column(name = "origin")
@@ -40,7 +38,7 @@ public class Flight {
 
     @NonNull
     @Column(name = "estFlightDuration")
-    private Time estFlightDuration;
+    private Duration estFlightDuration;
 
     @NonNull
     @Column(name = "maxNumSeats")
