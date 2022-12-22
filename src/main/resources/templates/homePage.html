@@ -26,7 +26,7 @@
         <li sec:authorize="hasRole('ADMIN')">
             <a th:href="@{/adminPage}">Admin page</a></li>
         <li sec:authorize="isAnonymous()">
-            <a th:href="@{/registation}">Registration</a></li>
+            <a th:href="@{/registration}">Registration</a></li>
         <li sec:authorize="isAnonymous()">
             <a th:href="@{/login}">Login</a></li>
         <li sec:authorize="isAuthenticated()">
