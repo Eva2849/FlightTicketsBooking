@@ -114,12 +114,16 @@
 
     <div id="fillableField">
         <label for="birthDate">Enter your date of birth: </label>
-        <input type="text" id="birthDate" name="birthDate">
+        <input type="date" id="birthDate" name="birthDate">
     </div>
 
     <div id="fillableField">
         <label for="gender">Enter your gender: </label>
-        <input type="text" id="gender" name="gender">
+        <select name="gender" id="gender">
+            <option value="UNKNOWN">Unknown</option>
+            <option value="MALE">Man</option>
+            <option value="FEMALE">Woman</option>
+        </select>
     </div>
     <hr/>
     <div id="submitDiv">
