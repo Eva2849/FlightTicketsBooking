@@ -3,8 +3,12 @@ package com.itstep.flightticketsbooking.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -25,21 +29,34 @@ public class User implements UserDetails {
     private long id;
 
     @NonNull
+    @NotBlank
+    @NotNull
+    @Column(unique = true)
     private String username;
 
     @NonNull
+    @NotBlank
+    @NotNull
     private String password;
 
     @NonNull
+    @NotBlank
+    @NotNull
     private String firstName;
 
     @NonNull
+    @NotBlank
+    @NotNull
     private String lastName;
 
     @NonNull
+    @NotNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Past
     private LocalDate birthDate;
 
     @NonNull
+    @NotNull
     @Enumerated(EnumType.STRING)
     private Gender gender;
 

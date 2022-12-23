@@ -37,9 +37,12 @@ public class InitData implements CommandLineRunner {
                 "Shaptala",
                 LocalDate.of(2000, Month.JANUARY, 1),
                 Gender.MALE);
-        Role adminRole = new Role("ADMIN");
+        Role adminRole = new Role("ROLE_ADMIN");
+        Role userRole = new Role("ROLE_USER");
         roleRepository.save(adminRole);
+        roleRepository.save(userRole);
         user.addRole(adminRole);
+        user.addRole(userRole);
         userRepository.save(user);
 
         Flight fl1 = new Flight("LO3880", LocalDateTime.of(2022, Month.DECEMBER, 4, 12, 15), "Dnipro", "Riga", Duration.ofMinutes(80), 200);
