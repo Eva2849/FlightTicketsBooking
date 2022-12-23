@@ -85,6 +85,7 @@
 
         #h2ForFlights {
             color: rgb(238, 231, 231);
+
         }
 
         #passengerTable {
@@ -126,6 +127,7 @@
 
         #h2ForPassenger {
             color: rgb(238, 231, 231);
+
         }
 
         #findSeatsDiv {
@@ -152,6 +154,7 @@
             width: 600px;
             margin-left: 28%;
             background-color: rgb(230, 222, 222);
+
         }
 
         #forName {
@@ -161,7 +164,7 @@
             margin-right: 47px;
         }
 
-        #forPassportData {
+        #forPasportData {
             float: left;
             margin-right: 35px;
             margin-top: 27px;
@@ -173,6 +176,13 @@
         }
 
         #forGender {
+            float: left;
+            margin-top: 27px;
+            margin-left: 63px;
+            margin-right: 22px;
+        }
+
+        #forFlifhtNumber {
             margin-top: 27px;
             margin-left: 63px;
         }
@@ -185,7 +195,7 @@
     </style>
 </head>
 
-<body style="font-family: sans-serif; border : 2px solid gray; padding :20px;">
+<body style="font-family: sans-serif; border : 2px solid gray ; padding :20px;">
 <nav>
 
     <div class="main-option">
@@ -208,7 +218,7 @@
 
 </nav>
 <h1 style="color: green">User page</h1>
-<div id="flightHead"><h1 id="h2ForFlights">AVAILABLE FLIGHTS</h1></div>
+<div id="flightHead"><h1 id="h2ForFlights">AVALIABLE FLIGHTS</h1></div>
 <div class="flights">
     <table id="flightTable">
         <thead id="flightHeadTable">
@@ -227,13 +237,14 @@
         <tr th:each="flight: ${flights}">
             <!--<td th:text="${flight.id}"></td>-->
             <td th:text="${flight.flightNumber}"></td>
-            <td th:text="${flight.departureDate.toLocalDate()}"></td>
-            <td th:text="${flight.departureDate.toLocalTime()}"></td>
+            <td th:text="${flight.departureDate}"></td>
+            <td th:text="${flight.time}"></td>
             <td th:text="${flight.origin}"></td>
             <td th:text="${flight.destination}"></td>
             <td th:text="${flight.estFlightDuration}"></td>
             <td th:text="${flight.maxNumSeats}"></td>
         </tr>
+
         </tbody>
     </table>
 </div>
@@ -259,7 +270,7 @@
             <label for="lastName">Last name: </label>
             <input type="text" id="lastName" name="lastName">
         </div>
-        <div id="forPassportData">
+        <div id="forPasportData">
             <label for="passportData">Passport: </label>
             <input type="text" id="passportData" name="passportData">
         </div>
@@ -270,6 +281,10 @@
         <div id="forGender">
             <label for="gender">Gender: </label>
             <input type="text" id="gender" name="gender">
+        </div>
+        <div id="forFlifhtNumber">
+            <label for="flightNumber">Flight number: </label>
+            <input type="text" id="flightNumber" name="flightNumber">
         </div>
         <div>
             <input type="submit" id="userSave"/>
@@ -293,6 +308,7 @@
         </tr>
         </thead>
         <tbody id="Passengers-table">
+
         </tbody>
     </table>
 </div>
