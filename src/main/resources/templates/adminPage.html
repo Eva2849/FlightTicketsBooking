@@ -4,141 +4,426 @@
     <meta charset="UTF-8">
     <title>Flights</title>
     <style>
-        table {
-            border-collapse: collapse;
+        .main-option {
+            width: 185px;
+            height: 40px;
+            border: 1px solid black;
+            background-color: rgb(43, 102, 137);
+            margin-left: 85%;
         }
 
-        table, td, th {
+        .toHome {
+            float: left;
+            margin-left: 20px;
+            margin-right: 20px;
+            margin-top: 10px;
+        }
+
+        .toLogout {
+            margin-right: 20px;
+            margin-top: 10px;
+        }
+
+        .home {
+            font-style: inherit;
+            color: rgb(173, 169, 169);
+            cursor: pointer;
+        }
+
+        .logout {
+            font-style: inherit;
+            color: rgb(173, 169, 169);
+            cursor: pointer;
+        }
+
+        li {
+            list-style-type: none;
+        }
+
+        tr, tr, th, td {
+            border-collapse: collapse;
             border: 1px solid black;
         }
 
-        td, th {
-            margin: 8px;
+        th {
+            position: sticky;
+            top: 0px;
+        }
+
+        table {
+            text-align: center;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        hr {
+            background-color: rgb(160, 185, 16);
+            border: 0px;
+            height: 4px;
+            margin-bottom: 20px;
+        }
+
+        .flights {
+            width: 100%;
+            height: 300px;
+            border: 1px solid;
+            overflow-y: scroll;
+            background-attachment: scroll;
+            text-align: center;
+        }
+
+        #flightHeadTable {
+            width: auto;
+            height: 50px;
+            border: 1px solid black;
+            text-align: center;
+            border-collapse: collapse;
+            position: sticky;
+            top: 0px;
+            background-color: rgb(106, 226, 200);
+        }
+
+        #flightHead {
+            border: 1px solid;
+            text-align: center;
+            width: 100%;
+            background-color: rgb(80, 169, 180);
+        }
+
+        #h1ForFlights {
+            color: rgb(238, 231, 231);
+        }
+
+        .forUserTableDiv {
+            width: 100%;
+            height: 300px;
+            border: 1px solid;
+            overflow-y: scroll;
+            background-attachment: scroll;
+            text-align: center;
+        }
+
+        #userHeadTable {
+            width: auto;
+            height: 50px;
+            border: 1px solid black;
+            text-align: center;
+            border-collapse: collapse;
+            position: sticky;
+            top: 0px;
+            background-color: rgb(106, 226, 200);
+        }
+
+        #userHead {
+            border: 1px solid;
+            text-align: center;
+            width: 100%;
+            background-color: rgb(80, 169, 180);
+        }
+
+        #h1ForUser {
+            color: rgb(238, 231, 231);
+        }
+
+        #headFlightForm {
+            border: 1px solid black;
+            text-align: center;
+            margin-top: 15px;
+            background-color: rgb(228, 83, 83);
+        }
+
+        #h1FlightForm {
+            color: rgb(238, 231, 231);
+        }
+
+        .addFlightForm {
+            border: 1px solid black;
+            background-color: rgb(169, 195, 20);
+        }
+
+        .toFlightNumber {
+            float: left;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            margin-left: 40px;
+        }
+
+        .toDepartureDate {
+            float: left;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            margin-left: 40px;
+            margin-right: 105px;
+        }
+
+        .toTime {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .toOrigin {
+            float: left;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            margin-left: 95px;
+        }
+
+        .toDestination {
+            float: left;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            margin-left: 65px;
+            margin-right: 40px;
+        }
+
+        .toEstFlightDuration {
+            float: left;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            margin-right: 40px;
+        }
+
+        .toMaxNumSeats {
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .toSubmitFlight {
+            margin-top: 30px;
+            margin-left: 45%;
+        }
+
+        .addFlightForm {
+            margin-bottom: 20px;
+            height: 160px;
+        }
+
+        #saveFlight {
+            width: 100px;
+            height: 50px;
+            cursor: pointer;
+            background-color: rgb(99, 187, 52);
+            border-radius: 10px;
+        }
+
+        .addUserFormHead {
+            border: 1px solid black;
+            text-align: center;
+            margin-top: 15px;
+            background-color: rgb(228, 83, 83);
+        }
+
+        #h1ForUserForm {
+            color: rgb(238, 231, 231);
+        }
+
+        .addUserForm {
+            border: 1px solid black;
+            background-color: rgb(169, 195, 20);
+        }
+
+        .toLogin {
+            float: left;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            margin-left: 380px;
+            margin-right: 140px;
+        }
+
+        .toPassword {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .toFirstName {
+            float: left;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            margin-left: 343px;
+            margin-right: 135px;
+        }
+
+        .toLastName {
+            margin-top: 20px;
+            margin-bottom: 10px;
+            margin-left: 40px;
+        }
+
+        .toBirthDate {
+            float: left;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            margin-left: 330px;
+            margin-right: 157px;
+        }
+
+        .toGender {
+            margin-top: 20px;
+            margin-bottom: 10px;
+            margin-left: 40px;
+        }
+
+        .toSubmitUser {
+            margin-top: 30px;
+            margin-left: 45%;
+            margin-bottom: 10px;
+        }
+
+        #userSave {
+            width: 100px;
+            height: 50px;
+            cursor: pointer;
+            background-color: rgb(99, 187, 52);
+            border-radius: 10px;
         }
     </style>
 </head>
-<body>
+<body style="font-family: sans-serif; border : 2px solid gray ; padding :20px;">
 <nav>
-    <menu>
-        <li><a th:href="@{/}">Home page</a></li>
-        <li sec:authorize="hasRole('USER')">
-            <a th:href="@{/userPage}">User page</a></li>
-        <li sec:authorize="hasRole('ADMIN')">
-            <a th:href="@{/adminPage}">Admin page</a></li>
-        <li sec:authorize="isAnonymous()">
-            <a th:href="@{/registration}">Registration</a></li>
-        <li sec:authorize="isAnonymous()">
-            <a th:href="@{/login}">Login</a></li>
-        <li sec:authorize="isAuthenticated()">
-            Welcome <span sec:authentication="name"></span>!
-        </li>
-        <li sec:authorize="isAuthenticated()">
-            <a th:href="@{/logout}">Logout</a></li>
-    </menu>
+    <div class="main-option">
+        <li class="toHome"><a class="home" th:href="@{/}">Main page</a></li>
+        <li class="toLogout" sec:authorize="isAuthenticated()"><a class="logout" th:href="@{/logout}">Logout</a></li>
+    </div>
+
+    <li sec:authorize="hasRole('USER')">
+        <a th:href="@{/userPage}">User page</a></li>
+    <li sec:authorize="hasRole('ADMIN')">
+        <a th:href="@{/adminPage}">Admin page</a></li>
+    <li sec:authorize="isAnonymous()">
+        <a th:href="@{/registration}">Registration</a></li>
+    <li sec:authorize="isAnonymous()">
+        <a th:href="@{/login}">Login</a></li>
+    <li sec:authorize="isAuthenticated()">
+        Welcome <span sec:authentication="name"></span>!
+    </li>
+    <li sec:authorize="isAuthenticated()">
+        <a th:href="@{/logout}">Logout</a></li>
+
 </nav>
-<h1 style="color: lavender">Admin page</h1>
-<h1>Create new flight:</h1>
-<div>
-    <div>
+
+<h1 style="color: rgb(185, 13, 13)">Admin page</h1>
+<div id="flightHead"><h1 id="h1ForFlights">AVAILABLE FLIGHTS DATA</h1></div>
+<div class="flights">
+    <table id="flightTable">
+        <thead id="flightHeadTable">
+        <tr>
+            <th>ID</th>
+            <th>Flight number</th>
+            <th>Departure date</th>
+            <th>Time</th>
+            <th>Origin</th>
+            <th>Destination</th>
+            <th>Flight duration</th>
+            <th>Max number of seats</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+<div id="headFlightForm"><h1 id="h1FlightForm">Create new flight:</h1></div>
+<div class="addFlightForm">
+    <div class="toFlightNumber">
         <label for="flightNumber">Flight number: </label>
         <input type="text" id="flightNumber" name="flightNumber">
     </div>
-    <div>
+    <div class="toDepartureDate">
         <label for="departureDate">Departure date: </label>
         <input type="text" id="departureDate" name="departureDate">
     </div>
-    <div>
+    <div class="toTime">
         <label for="time">Time: </label>
-        <input type="number" id="time" name="time">
+        <input type="text" id="time" name="time">
     </div>
-    <div>
+    <div class="toOrigin">
         <label for="origin">Origin: </label>
         <input type="text" id="origin" name="origin">
     </div>
-    <div>
+    <div class="toDestination">
         <label for="destination">Destination: </label>
         <input type="text" id="destination" name="destination">
     </div>
-    <div>
+    <div class="toEstFlightDuration">
         <label for="estFlightDuration">Flight duration: </label>
         <input type="text" id="estFlightDuration" name="estFlightDuration">
     </div>
-    <div>
+    <div class="toMaxNumSeats">
         <label for="maxNumSeats">Capacity: </label>
         <input type="text" id="maxNumSeats" name="maxNumSeats">
     </div>
-    <div>
+    <!--<div>
         <label for="users">User: </label>
         <select name="users" id="users"></select>
-    </div>
-    <div>
-        <input type="submit" id="save"/>
+    </div>-->
+    <div class="toSubmitFlight">
+        <input type="submit" id="saveFlight" value="SAVE FLIGHT"/>
     </div>
 </div>
+<hr/>
 
-<h1>Create new user:</h1>
-<div>
-    <div>
+<div id="userHead"><h2 id="h1ForUser">AVALIABLE USERS DATA</h2></div>
+<div class="forUserTableDiv">
+    <table id="Users-table">
+        <thead id="userHeadTable">
+        <tr>
+            <th>ID</th>
+            <th>Login</th>
+            <th>Password</th>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Date of birth</th>
+            <th>Gender</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="flight: ${flights}">
+            <td th:text="${flight.id}"></td>
+            <td th:text="${flight.flightNumber}"></td>
+            <td th:text="${flight.departureDate.toLocalDate()}"></td>
+            <td th:text="${flight.departureDate.toLocalTime()}"></td>
+            <td th:text="${flight.origin}"></td>
+            <td th:text="${flight.destination}"></td>
+            <td th:text="${flight.estFlightDuration}"></td>
+            <td th:text="${flight.maxNumSeats}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="addUserFormHead"><h1 id="h1ForUserForm">Create new user:</h1></div>
+<div class="addUserForm">
+    <div class="toLogin">
         <label for="login">Login: </label>
         <input type="text" id="login" name="login">
     </div>
-    <div>
+    <div class="toPassword">
         <label for="password">Password: </label>
         <input type="text" id="password" name="password">
     </div>
-    <div>
+    <div class="toFirstName">
         <label for="firstName">First name: </label>
         <input type="text" id="firstName" name="firstName">
     </div>
-    <div>
+    <div class="toLastName">
         <label for="lastName">Last name: </label>
         <input type="text" id="lastName" name="lastName">
     </div>
-    <div>
+    <div class="toBirthDate">
         <label for="birthDate">Date of birth: </label>
         <input type="text" id="birthDate" name="birthDate">
     </div>
-    <div>
+    <div class="toGender">
         <label for="gender">Gender: </label>
         <input type="text" id="gender" name="gender">
     </div>
-    <div>
-        <input type="submit" id="userSave"/>
+    <div class="toSubmitUser">
+        <input type="submit" id="userSave" value="SAVE USER"/>
     </div>
 </div>
 
-<h2>Flights table:</h2>
-<table>
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Flight number</th>
-        <th>Departure date</th>
-        <th>Time</th>
-        <th>Origin</th>
-        <th>Destination</th>
-        <th>Flight duration</th>
-        <th>Max number of seats</th>
-    </tr>
-    </thead>
-    <tbody id="Flights-table"></tbody>
-</table>
-
-<h2>Users table:</h2>
-<table>
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Login</th>
-        <th>Password</th>
-        <th>First name</th>
-        <th>Last name</th>
-        <th>Date of birth</th>
-        <th>Gender</th>
-    </tr>
-    </thead>
-    <tbody id="Users-table"></tbody>
-</table>
 <script>
     const baseURI = 'http://localhost:8080/adminPage/api/v1';
     const flightsTable = document.getElementById('Flights-table');

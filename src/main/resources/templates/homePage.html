@@ -4,64 +4,151 @@
     <meta charset="UTF-8">
     <title>Home</title>
     <style>
+        .toHome {
+            float: left;
+            margin-left: 20px;
+            margin-right: 20px;
+            margin-top: 10px;
+        }
+
+        .toRegistration {
+            float: left;
+            margin-left: 20px;
+            margin-right: 20px;
+            margin-top: 10px;
+        }
+
+        .toLogin {
+            float: left;
+            margin-left: 20px;
+            margin-right: 20px;
+            margin-top: 10px;
+        }
+
+        .main-option {
+            width: 330px;
+            height: 40px;
+            border: 1px solid black;
+            background-color: rgb(43, 102, 137);
+            margin-left: 73%;
+        }
+
+        .home {
+            font-style: inherit;
+            color: rgb(173, 169, 169);
+            cursor: pointer;
+        }
+
+        .login {
+            font-style: inherit;
+            color: rgb(173, 169, 169);
+            cursor: pointer;
+        }
+
+        .registration {
+            font-style: inherit;
+            color: rgb(173, 169, 169);
+            cursor: pointer;
+        }
+
         table {
+            text-align: center;
             border-collapse: collapse;
+            width: 100%;
         }
 
         table, td, th {
             border: 1px solid black;
         }
 
-        td, th {
-            margin: 8px;
+        li {
+            list-style-type: none;
+        }
+
+        #flightHeadTable {
+            width: auto;
+            height: 50px;
+            border: 1px solid black;
+            text-align: center;
+            border-collapse: collapse;
+            position: sticky;
+            top: 0px;
+            background-color: rgb(106, 226, 200);
+        }
+
+        #flightHead {
+            border: 1px solid;
+            text-align: center;
+            width: 100%;
+            background-color: rgb(80, 169, 180);
+        }
+
+        #h2ForFlights {
+            color: rgb(238, 231, 231);
+        }
+
+        .flights {
+            width: 100%;
+            height: 300px;
+            border: 1px solid;
+            overflow-y: scroll;
+            background-attachment: scroll;
+            text-align: center;
         }
     </style>
 </head>
-<body>
+<body style="font-family: sans-serif; border : 2px solid gray ; padding :20px;">
 <nav>
-    <menu>
-        <li><a th:href="@{/}">Home page</a></li>
-        <li sec:authorize="hasRole('USER')">
-            <a th:href="@{/userPage}">User page</a></li>
-        <li sec:authorize="hasRole('ADMIN')">
-            <a th:href="@{/adminPage}">Admin page</a></li>
-        <li sec:authorize="isAnonymous()">
-            <a th:href="@{/registation}">Registration</a></li>
-        <li sec:authorize="isAnonymous()">
-            <a th:href="@{/login}">Login</a></li>
-        <li sec:authorize="isAuthenticated()">
-            Welcome <span sec:authentication="name"></span>!
-        </li>
-        <li sec:authorize="isAuthenticated()">
-            <a th:href="@{/logout}">Logout</a></li>
-    </menu>
+    <div class="main-option">
+        <li class="toHome"><a class="home" th:href="@{/}">Home page</a></li>
+
+        <li class="toRegistration" sec:authorize="isAnonymous()">
+            <a class="registration" th:href="@{/registration}">Registration</a></li>
+
+        <li class="toLogin" sec:authorize="isAnonymous()">
+            <a class="login" th:href="@{/login}">Login</a></li>
+    </div>
+
+    <li sec:authorize="hasRole('USER')">
+        <a th:href="@{/userPage}">User page</a></li>
+    <li sec:authorize="hasRole('ADMIN')">
+        <a th:href="@{/adminPage}">Admin page</a></li>
+    <li sec:authorize="isAuthenticated()">
+        Welcome <span sec:authentication="name"></span>!
+    </li>
+    <li sec:authorize="isAuthenticated()">
+        <a th:href="@{/logout}">Logout</a></li>
+
 </nav>
-<h1>Home</h1>
-<h1>Flights</h1>
-<table>
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Flight number</th>
-        <th>Departure date</th>
-        <th>Time</th>
-        <th>Origin</th>
-        <th>Destination</th>
-        <th>Flight duration</th>
-        <th>Max number of seats</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="flight: ${flights}">
-        <td th:text="${flight.id}"></td>
-        <td th:text="${flight.flightNumber}"></td>
-        <td th:text="${flight.departureDate}"></td>
-        <td th:text="${flight.time}"></td>
-        <td th:text="${flight.origin}"></td>
-        <td th:text="${flight.destination}"></td>
-        <td th:text="${flight.estFlightDuration}"></td>
-        <td th:text="${flight.maxNumSeats}"></td>
-    </tbody>
-</table>
+<h1 style="color: green">Home</h1>
+<div id="flightHead"><h1 id="h2ForFlights">AVAILABLE FLIGHTS</h1></div>
+<div class="flights">
+    <table id="flightTable">
+        <thead id="flightHeadTable">
+        <tr>
+            <!--<th >ID</th>-->
+            <th>Flight number</th>
+            <th>Departure date</th>
+            <th>Time</th>
+            <th>Origin</th>
+            <th>Destination</th>
+            <th>Flight duration</th>
+            <th>Max number of seats</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="flight: ${flights}">
+            <!--<td th:text="${flight.id}"></td>-->
+            <td th:text="${flight.flightNumber}"></td>
+            <td th:text="${flight.departureDate.toLocalDate()}"></td>
+            <td th:text="${flight.departureDate.toLocalTime()}"></td>
+            <td th:text="${flight.origin}"></td>
+            <td th:text="${flight.destination}"></td>
+            <td th:text="${flight.estFlightDuration}"></td>
+            <td th:text="${flight.maxNumSeats}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>
