@@ -3,52 +3,397 @@
 <head>
     <meta charset="UTF-8">
     <title>Flights</title>
+    <style>
+        .main-option {
+            width: 185px;
+            height: 40px;
+            border: 1px solid black;
+            background-color: rgb(43, 102, 137);
+            margin-left: 85%;
+        }
+
+        li {
+            list-style-type: none;
+        }
+
+        .toHome {
+            float: left;
+            margin-left: 20px;
+            margin-right: 20px;
+            margin-top: 10px;
+        }
+
+        .toLogout {
+            margin-right: 20px;
+            margin-top: 10px;
+        }
+
+        .home {
+            font-style: inherit;
+            color: rgb(173, 169, 169);
+            cursor: pointer;
+        }
+
+        .logout {
+            font-style: inherit;
+            color: rgb(173, 169, 169);
+            cursor: pointer;
+        }
+
+        .flights {
+            width: 100%;
+            height: 300px;
+            border: 1px solid;
+            overflow-y: scroll;
+            background-attachment: scroll;
+            text-align: center;
+        }
+
+        tr, tr, th, td {
+            border-collapse: collapse;
+            border: 1px solid black;
+        }
+
+        th {
+            position: sticky;
+            top: 0px;
+        }
+
+        table {
+            text-align: center;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        #flightHeadTable {
+            width: auto;
+            height: 50px;
+            border: 1px solid black;
+            text-align: center;
+            border-collapse: collapse;
+            position: sticky;
+            top: 0px;
+            background-color: rgb(106, 226, 200);
+        }
+
+        #flightHead {
+            border: 1px solid;
+            text-align: center;
+            width: 100%;
+            background-color: rgb(80, 169, 180);
+        }
+
+        #h2ForFlights {
+            color: rgb(238, 231, 231);
+
+        }
+
+        #passengerTable {
+            width: 100%;
+            height: 50px;
+            border: 1px solid black;
+            text-align: center;
+            border-collapse: collapse;
+            position: sticky;
+            top: 0px;
+        }
+
+        #passengers {
+            width: 100%;
+            height: 300px;
+            border: 1px solid;
+            overflow-y: scroll;
+            background-attachment: scroll;
+            text-align: center;
+        }
+
+        #passengerTableHead {
+            width: auto;
+            height: 50px;
+            border: 1px solid black;
+            text-align: center;
+            border-collapse: collapse;
+            position: sticky;
+            top: 0px;
+            background-color: rgb(106, 226, 200);
+        }
+
+        #passengerHead {
+            border: 1px solid;
+            text-align: center;
+            width: 100%;
+            background-color: rgb(80, 169, 180);
+        }
+
+        #h2ForPassenger {
+            color: rgb(238, 231, 231);
+
+        }
+
+        #findSeatsDiv {
+            margin-top: 27px;
+            margin-top: 27px;
+            margin-left: 60px;
+        }
+
+        #seatsFind {
+            margin-left: 20px;
+            width: 60px;
+            background-color: rgb(99, 187, 52);
+            border-radius: 8px;
+        }
+
+        #addPassengerH1 {
+            text-align: center;
+        }
+
+        #forAddPassengers {
+            border: 1px solid black;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            width: 600px;
+            margin-left: 28%;
+            background-color: rgb(230, 222, 222);
+
+        }
+
+        #forName {
+            float: left;
+            margin-right: 35px;
+            margin-left: 40px;
+            margin-right: 47px;
+        }
+
+        #forPasportData {
+            float: left;
+            margin-right: 35px;
+            margin-top: 27px;
+            margin-left: 52px;
+        }
+
+        #forBirthDate {
+            margin-top: 27px;
+        }
+
+        #forGender {
+            float: left;
+            margin-top: 27px;
+            margin-left: 63px;
+            margin-right: 22px;
+        }
+
+        #forFlifhtNumber {
+            margin-top: 27px;
+            margin-left: 63px;
+        }
+
+        #userSave {
+            margin-top: 27px;
+            margin-left: 42%;
+        }
+
+    </style>
 </head>
-<body>
+
+<body style="font-family: sans-serif; border : 2px solid gray ; padding :20px;">
 <nav>
-    <menu>
-        <li><a th:href="@{/}">Home page</a></li>
-        <li sec:authorize="hasRole('USER')">
-            <a th:href="@{/userPage}">User page</a></li>
-        <li sec:authorize="hasRole('ADMIN')">
-            <a th:href="@{/adminPage}">Admin page</a></li>
-        <li sec:authorize="isAnonymous()">
-            <a th:href="@{/registration}">Registration</a></li>
-        <li sec:authorize="isAnonymous()">
-            <a th:href="@{/login}">Login</a></li>
-        <li sec:authorize="isAuthenticated()">
-            Welcome <span sec:authentication="name"></span>!
-        </li>
-        <li sec:authorize="isAuthenticated()">
-            <a th:href="@{/logout}">Logout</a></li>
-    </menu>
+
+    <div class="main-option">
+        <li class="toHome"><a class="home" th:href="@{/}">Main page</a></li>
+        <li class="toLogout" sec:authorize="isAuthenticated()"><a class="logout" th:href="@{/logout}">Logout</a></li>
+    </div>
+
+    <li sec:authorize="hasRole('USER')">
+        <a th:href="@{/userPage}">User page</a></li>
+    <li sec:authorize="hasRole('ADMIN')">
+        <a th:href="@{/adminPage}">Admin page</a></li>
+    <li sec:authorize="isAnonymous()">
+        <a th:href="@{/registration}">Registration</a></li>
+    <li sec:authorize="isAnonymous()">
+        <a th:href="@{/login}">Login</a></li>
+    <li sec:authorize="isAuthenticated()">
+        Welcome <span sec:authentication="name"></span>!
+    </li>
+
+
 </nav>
 <h1 style="color: green">User page</h1>
-<h1>Flights</h1>
-<table>
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Flight number</th>
-        <th>Departure date</th>
-        <th>Time</th>
-        <th>Origin</th>
-        <th>Destination</th>
-        <th>Flight duration</th>
-        <th>Max number of seats</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="flight: ${flights}">
-        <td th:text="${flight.id}"></td>
-        <td th:text="${flight.flightNumber}"></td>
-        <td th:text="${flight.departureDate}"></td>
-        <td th:text="${flight.time}"></td>
-        <td th:text="${flight.origin}"></td>
-        <td th:text="${flight.destination}"></td>
-        <td th:text="${flight.estFlightDuration}"></td>
-        <td th:text="${flight.maxNumSeats}"></td>
-    </tbody>
-</table>
+<div id="flightHead"><h1 id="h2ForFlights">AVALIABLE FLIGHTS</h1></div>
+<div class="flights">
+    <table id="flightTable">
+        <thead id="flightHeadTable">
+        <tr>
+            <!--<th >ID</th>-->
+            <th>Flight number</th>
+            <th>Departure date</th>
+            <th>Time</th>
+            <th>Origin</th>
+            <th>Destination</th>
+            <th>Flight duration</th>
+            <th>Max number of seats</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="flight: ${flights}">
+            <!--<td th:text="${flight.id}"></td>-->
+            <td th:text="${flight.flightNumber}"></td>
+            <td th:text="${flight.departureDate}"></td>
+            <td th:text="${flight.time}"></td>
+            <td th:text="${flight.origin}"></td>
+            <td th:text="${flight.destination}"></td>
+            <td th:text="${flight.estFlightDuration}"></td>
+            <td th:text="${flight.maxNumSeats}"></td>
+        </tr>
+
+        </tbody>
+    </table>
+</div>
+
+<div id="findSeatsDiv">
+    <div style="float: left;">
+        <label for="numberOfSeats">How many people will fly? </label>
+        <input type="text" id="numberOfSeats" name="numberOfSeats">
+    </div>
+    <div>
+        <input type="submit" id="seatsFind" value="find"/>
+    </div>
+</div>
+
+<div id="forAddPassengers">
+    <h1 id="addPassengerH1">Please enter passenger data:</h1>
+    <div style="margin-top: 10px; margin-bottom: 10px;">
+        <div id="forName">
+            <label for="firstName">First name: </label>
+            <input type="text" id="firstName" name="firstName">
+        </div>
+        <div id="forLastName">
+            <label for="lastName">Last name: </label>
+            <input type="text" id="lastName" name="lastName">
+        </div>
+        <div id="forPasportData">
+            <label for="passportData">Passport: </label>
+            <input type="text" id="passportData" name="passportData">
+        </div>
+        <div id="forBirthDate">
+            <label for="birthDate">Date of birth: </label>
+            <input type="text" id="birthDate" name="birthDate">
+        </div>
+        <div id="forGender">
+            <label for="gender">Gender: </label>
+            <input type="text" id="gender" name="gender">
+        </div>
+        <div id="forFlifhtNumber">
+            <label for="flightNumber">Flight number: </label>
+            <input type="text" id="flightNumber" name="flightNumber">
+        </div>
+        <div>
+            <input type="submit" id="userSave"/>
+        </div>
+    </div>
+</div>
+
+<div id="passengerHead"><h2 id="h2ForPassenger">PASSENGER LIST</h2></div>
+<div id="passengers">
+    <table id="passengerTable">
+        <thead id="passengerTableHead">
+        <tr>
+            <!--<th>ID</th>-->
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Passport data</th>
+            <th>Date of birth</th>
+            <th>Gender</th>
+            <th>Flight number</th>
+            <th>Destination</th>
+        </tr>
+        </thead>
+        <tbody id="Passengers-table">
+
+        </tbody>
+    </table>
+</div>
+
+<script>
+    const baseURI = 'http://localhost:8080/userPage/api/v1';
+    const passengersTable = document.getElementById('Passengers-table');
+    const savePassengerButton = document.getElementById('passengerSave');
+
+    function addPassenger(passenger) {
+        const tr = document.createElement('tr');
+        for (const prop in passenger) {
+            const td = document.createElement('td');
+            td.append(document.createTextNode(passenger[prop]));
+            tr.append(td);
+        }
+        passengersTable.append(tr);
+    }
+
+    function fillTablePassengers(passengers) {
+        passengersTable.innerHTML = '';
+        passengers.forEach(passenger => {
+            addPassenger(passenger);
+        });
+    }
+
+    function fillPassengers(passengers) {
+        const passengerSelect = document.getElementById('passengers');
+        passengers.forEach(passenger => {
+            const option = document.createElement('option');
+            option.value = passenger.id;
+            option.append(document.createTextNode(passenger.name));
+            passengerSelect.append(option);
+        });
+    }
+
+    async function loadPassengers() {
+        const response = await fetch(`${baseURI}/passengers`, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+        const passengers = await response.json();
+        console.log(passengers);
+        fillTablePassengers(passengers)
+        fillPassengers(passengers);
+    }
+
+    window.addEventListener('load', loadPassengers);
+
+    async function savePassenger() {
+        const firstNameInput = document.getElementById('firstName');
+        const lastNameInput = document.getElementById('lastName');
+        const passportDataInput = document.getElementById('passportData');
+        const birthDateInput = document.getElementById('birthDate');
+        const genderInput = document.getElementById('gender');
+
+        const passenger = {
+            firstName: firstNameInput.value,
+            lastName: lastNameInput.value,
+            passportData: passportDataInput.value,
+            birthDate: birthDateInput.value,
+            gender: genderInput.value
+        };
+
+        const response = await fetch(`${baseURI}/passengers`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(passenger)
+        });
+
+        console.log(response.status);
+        if (response.status === 201) {
+            const loc = response.headers.get('location');
+            const resp = await fetch(`http://localhost:8080${loc}`)
+            addPassenger(await resp.json())
+        } else {
+            alert('Error: ' + response.status);
+        }
+    }
+
+    savePassengerButton.addEventListener('click', savePassenger);
+</script>
 </body>
 </html>

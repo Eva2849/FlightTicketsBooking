@@ -42,7 +42,7 @@ public class RegistrationController {
                 .password(passwordEncoder.encode(usernamePassword.password))
                 .roles("USER")
                 .build();
-//        userRepository.save(user);
+//        userRepository.save(userDetails);
         return "redirect:/login";
     }
 }
