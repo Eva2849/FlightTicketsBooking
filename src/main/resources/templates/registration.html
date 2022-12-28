@@ -14,7 +14,7 @@
             color: darksalmon;
         }
 
-        #fillableField {
+        .fillableField {
             text-align: center;
             margin-bottom: 30px;
         }
@@ -91,33 +91,33 @@
 <h3 id="registerH3">All fields must be filled</h3>
 <hr/>
 <form method="post">
-    <div id="fillableField">
+    <div class="fillableField">
         <label for="username">Enter your login: </label>
         <input type="text" id="username" name="username" required th:value="${user.username}"/>
     </div>
 
-    <div id="fillableField">
+    <div class="fillableField">
         <label for="password">Enter your password: </label>
         <input type="password" id="password" name="password" required th:value="${user.password}" />
     </div>
 
     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-    <div id="fillableField">
+    <div class="fillableField">
         <label for="firstName">Enter your first name: </label>
         <input type="text" id="firstName" name="firstName" required th:value="${user.firstName}" />
     </div>
 
-    <div id="fillableField">
+    <div class="fillableField">
         <label for="lastName">Enter your last name: </label>
         <input type="text" id="lastName" name="lastName" required />
     </div>
 
-    <div id="fillableField">
+    <div class="fillableField">
         <label for="birthDate">Enter your date of birth: </label>
         <input type="date" id="birthDate" name="birthDate" required />
     </div>
 
-    <div id="fillableField">
+    <div class="fillableField">
         <label for="gender">Enter your gender: </label>
         <select name="gender" id="gender">
             <option value="UNKNOWN">Unknown</option>
