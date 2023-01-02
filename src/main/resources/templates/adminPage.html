@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Flights</title>
+    <meta name="csrf-token" id="csrf-token" th:content="${_csrf.token}"/>
+    <meta name="csrf-header" id="csrf-header" th:content="${_csrf.headerName}"/>
     <style>
         .main-option {
             width: 185px;
@@ -401,7 +403,7 @@
     </div>
     <div class="toPassword">
         <label for="password">Password: </label>
-        <input type="text" id="password" name="password">
+        <input type="password" id="password" name="password">
     </div>
     <div class="toFirstName">
         <label for="firstName">First name: </label>
@@ -413,11 +415,15 @@
     </div>
     <div class="toBirthDate">
         <label for="birthDate">Date of birth: </label>
-        <input type="text" id="birthDate" name="birthDate">
+        <input type="date" id="birthDate" name="birthDate">
     </div>
     <div class="toGender">
         <label for="gender">Gender: </label>
-        <input type="text" id="gender" name="gender">
+        <select id="gender" name="gender">
+            <option value="MALE">Male</option>
+            <option value="FEMALE">Female</option>
+            <option value="UNKNOWN">Unknown</option>
+        </select>
     </div>
     <div class="toSubmitUser">
         <input type="submit" id="userSave" value="SAVE USER"/>
@@ -425,12 +431,15 @@
 </div>
 
 <script>
-    const baseURI = 'http://localhost:8080/adminPage/api/v1';
+    const baseURI = 'http://localhost:8080/api/v1/admin';
     const flightsTable = document.getElementById('flightTable');
-    const saveFlightButton = document.getElementById('save');
+    const saveFlightButton = document.getElementById('saveFlight');
 
     const usersTable = document.getElementById('Users-table');
     const saveUserButton = document.getElementById('userSave');
+
+    const csrfToken = document.getElementById('csrf-token');
+    const csrfHeader = document.getElementById('csrf-header');
 
     function addFlight(flight) {
         const tr = document.createElement('tr');
@@ -450,7 +459,13 @@
         const tr = document.createElement('tr');
         for (const prop in user) {
             const td = document.createElement('td');
-            td.append(document.createTextNode(user[prop]));
+            let value;
+            if (prop === 'authorities') {
+                value = user[prop].map(authority => authority.name).reduce((a, b) => `${a}, ${b}`);
+            } else {
+                value = user[prop];
+            }
+            td.append(document.createTextNode(value));
             tr.append(td);
         }
         usersTable.append(tr);
@@ -470,16 +485,6 @@
         });
     }
 
-    function fillUsers(users) {
-        const userSelect = document.getElementById('users');
-        users.forEach(user => {
-            const option = document.createElement('option');
-            option.value = user.id;
-            option.append(document.createTextNode(user.name));
-            userSelect.append(option);
-        });
-    }
-
     async function loadFlights() {
         const response = await fetch(`${baseURI}/flights`, {
             method: 'GET',
@@ -493,16 +498,10 @@
     }
 
     async function loadUsers() {
-        const response = await fetch(`${baseURI}/users`, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json'
-            }
-        });
+        const response = await fetch(`${baseURI}/users`);
         const users = await response.json();
         console.log(users);
-        fillTableUsers(users)
-        fillUsers(users);
+        fillTableUsers(users);
     }
 
     window.addEventListener('load', loadFlights);
@@ -554,27 +553,35 @@
         const genderInput = document.getElementById('gender');
 
         const user = {
-            login: loginInput.value,
+            username: loginInput.value,
             password: passwordInput.value,
             firstName: firstNameInput.value,
             lastName: lastNameInput.value,
             birthDate: birthDateInput.value,
             gender: genderInput.value
         };
-
+        console.log(user);
+        const csrfHeaderName = csrfHeader.content;
+        const csrfTokenValue = csrfToken.content;
         const response = await fetch(`${baseURI}/users`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                [csrfHeaderName]: csrfTokenValue
             },
             body: JSON.stringify(user)
         });
 
-        console.log(response.status);
         if (response.status === 201) {
             const loc = response.headers.get('location');
             const resp = await fetch(`http://localhost:8080${loc}`)
-            addUser(await resp.json())
+            if(resp.status === 200) {
+                let user = await resp.json();
+                console.log(user);
+                addUser(user)
+            } else {
+                alert('Error: ' + (await resp.text()));
+            }
         } else {
             alert('Error: ' + response.status);
         }

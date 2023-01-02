@@ -1,5 +1,6 @@
 package com.itstep.flightticketsbooking.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -20,6 +21,7 @@ public class Role implements GrantedAuthority {
     @NonNull
     private String name;
     @ManyToMany
+    @JsonIgnore
     private Set<User> users = new HashSet<>();
 
     public void addUser(User user) {

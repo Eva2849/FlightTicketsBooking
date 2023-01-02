@@ -37,6 +37,7 @@ public class User implements UserDetails {
     @NonNull
     @NotBlank
     @NotNull
+    @JsonIgnore
     private String password;
 
     @NonNull
@@ -60,6 +61,7 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "users", cascade = CascadeType.ALL)
     private Set<Role> roles = new HashSet<>();
 
