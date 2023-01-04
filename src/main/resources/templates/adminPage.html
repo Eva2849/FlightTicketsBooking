@@ -295,11 +295,11 @@
         <a th:href="@{/registration}">Registration</a></li>
     <li sec:authorize="isAnonymous()">
         <a th:href="@{/login}">Login</a></li>
-    <li sec:authorize="isAuthenticated()">
+    <!--<li sec:authorize="isAuthenticated()">
         Welcome <span sec:authentication="name"></span>!
-    </li>
-    <li sec:authorize="isAuthenticated()">
-        <a th:href="@{/logout}">Logout</a></li>
+    </li>-->
+    <!--<li sec:authorize="isAuthenticated()">
+        <a th:href="@{/logout}">Logout</a></li>-->
 
 </nav>
 
