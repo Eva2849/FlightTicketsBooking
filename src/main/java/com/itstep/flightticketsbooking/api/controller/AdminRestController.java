@@ -1,8 +1,11 @@
 package com.itstep.flightticketsbooking.api.controller;
 
 import com.itstep.flightticketsbooking.api.dto.ErrorResponse;
+import com.itstep.flightticketsbooking.api.dto.FlightDto;
 import com.itstep.flightticketsbooking.api.dto.UserDto;
+import com.itstep.flightticketsbooking.entity.Flight;
 import com.itstep.flightticketsbooking.entity.User;
+import com.itstep.flightticketsbooking.repository.FlightRepository;
 import com.itstep.flightticketsbooking.repository.RoleRepository;
 import com.itstep.flightticketsbooking.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +25,7 @@ import java.util.Optional;
 public class AdminRestController {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final FlightRepository flightRepository;
 
     @GetMapping("/users")
     public ResponseEntity<List<User>> listUsers() {
@@ -31,7 +35,7 @@ public class AdminRestController {
     @GetMapping("/users/{id}")
     public ResponseEntity<?> showUser(@PathVariable Long id) {
         Optional<User> optionalUser = userRepository.findById(id);
-        if(optionalUser.isPresent()) {
+        if (optionalUser.isPresent()) {
             return ResponseEntity.ok(optionalUser.get());
         }
         return ResponseEntity.badRequest()
@@ -58,6 +62,30 @@ public class AdminRestController {
 
     @GetMapping("/flights")
     public ResponseEntity<?> listFlights() {
-        throw new RuntimeException("Not implemented yet");
+        return ResponseEntity.ok(flightRepository.findAll());
+    }
+
+    @GetMapping("/flights/{id}")
+    public ResponseEntity<?> showFlight(@PathVariable Long id) {
+        Optional<Flight> optionalFlight = flightRepository.findById(id);
+        if (optionalFlight.isPresent()) {
+            return ResponseEntity.ok(optionalFlight.get());
+        }
+        return ResponseEntity.badRequest().body("Flight not found");
+    }
+
+    @PostMapping("/flights")
+    public ResponseEntity<?> createFlight(@RequestBody @Validated FlightDto flightDto, BindingResult bindingResult) {
+        if (!bindingResult.hasErrors()) {
+            Flight flight = flightDto.toEntityFlight();
+            try {
+                flight = flightRepository.save(flight);
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrorResponse(e.getMessage()));
+            }
+            URI uri = URI.create("/api/v1/admin/flights/" + flight.getId());
+            return ResponseEntity.created(uri).build();
+        }
+        return ResponseEntity.badRequest().body(bindingResult.getAllErrors());
     }
 }

@@ -49,7 +49,7 @@
 
         th {
             position: sticky;
-            top: 0px;
+            top: 0;
         }
 
         table {
@@ -60,7 +60,7 @@
 
         hr {
             background-color: rgb(160, 185, 16);
-            border: 0px;
+            border: 0;
             height: 4px;
             margin-bottom: 20px;
         }
@@ -81,7 +81,7 @@
             text-align: center;
             border-collapse: collapse;
             position: sticky;
-            top: 0px;
+            top: 0;
             background-color: rgb(106, 226, 200);
         }
 
@@ -112,7 +112,7 @@
             text-align: center;
             border-collapse: collapse;
             position: sticky;
-            top: 0px;
+            top: 0;
             background-color: rgb(106, 226, 200);
         }
 
@@ -152,30 +152,19 @@
 
         .toDepartureDate {
             float: left;
-            margin-top: 10px;
-            margin-bottom: 10px;
-            margin-left: 40px;
-            margin-right: 105px;
-        }
-
-        .toTime {
-            margin-top: 10px;
-            margin-bottom: 10px;
+            margin: 10px 105px 10px 40px;
         }
 
         .toOrigin {
             float: left;
             margin-top: 10px;
             margin-bottom: 10px;
-            margin-left: 95px;
+            margin-left: 55px;
         }
 
         .toDestination {
             float: left;
-            margin-top: 10px;
-            margin-bottom: 10px;
-            margin-left: 65px;
-            margin-right: 40px;
+            margin: 10px 40px 10px 65px;
         }
 
         .toEstFlightDuration {
@@ -197,7 +186,7 @@
 
         .addFlightForm {
             margin-bottom: 20px;
-            height: 160px;
+            height: 200px;
         }
 
         #saveFlight {
@@ -306,21 +295,20 @@
 <h1 style="color: rgb(185, 13, 13)">Admin page</h1>
 <div id="flightHead"><h1 id="h1ForFlights">AVAILABLE FLIGHTS DATA</h1></div>
 <div class="flights">
-    <table id="flightTable">
+    <table>
         <thead id="flightHeadTable">
         <tr>
             <th>ID</th>
             <th>Flight number</th>
-            <th>Departure date</th>
-            <th>Time</th>
+            <th>Departure date and time</th>
             <th>Origin</th>
             <th>Destination</th>
             <th>Flight duration</th>
             <th>Max number of seats</th>
-            <th>Action</th>
         </tr>
         </thead>
-        <tbody>
+        <tbody id="Flights-table">
+
         </tbody>
     </table>
 </div>
@@ -329,68 +317,50 @@
 <div class="addFlightForm">
     <div class="toFlightNumber">
         <label for="flightNumber">Flight number: </label>
-        <input type="text" id="flightNumber" name="flightNumber">
+        <input type="text" id="flightNumber" name="flightNumber" required>
     </div>
     <div class="toDepartureDate">
         <label for="departureDate">Departure date: </label>
-        <input type="text" id="departureDate" name="departureDate">
-    </div>
-    <div class="toTime">
-        <label for="time">Time: </label>
-        <input type="text" id="time" name="time">
+        <input type="datetime-local" id="departureDate" name="departureDate" required>
     </div>
     <div class="toOrigin">
         <label for="origin">Origin: </label>
-        <input type="text" id="origin" name="origin">
+        <input type="text" id="origin" name="origin" required>
     </div>
     <div class="toDestination">
         <label for="destination">Destination: </label>
-        <input type="text" id="destination" name="destination">
+        <input type="text" id="destination" name="destination" required>
     </div>
     <div class="toEstFlightDuration">
         <label for="estFlightDuration">Flight duration: </label>
-        <input type="text" id="estFlightDuration" name="estFlightDuration">
+        <input type="number" id="estFlightDuration" name="estFlightDuration" required>
     </div>
     <div class="toMaxNumSeats">
         <label for="maxNumSeats">Capacity: </label>
-        <input type="text" id="maxNumSeats" name="maxNumSeats">
+        <input type="number" id="maxNumSeats" name="maxNumSeats">
     </div>
-    <!--<div>
-        <label for="users">User: </label>
-        <select name="users" id="users"></select>
-    </div>-->
     <div class="toSubmitFlight">
         <input type="submit" id="saveFlight" value="SAVE FLIGHT"/>
     </div>
 </div>
 <hr/>
 
-<div id="userHead"><h2 id="h1ForUser">AVALIABLE USERS DATA</h2></div>
+<div id="userHead"><h2 id="h1ForUser">AVAILABLE USERS DATA</h2></div>
 <div class="forUserTableDiv">
-    <table id="Users-table">
+    <table >
         <thead id="userHeadTable">
         <tr>
             <th>ID</th>
             <th>Login</th>
-            <th>Password</th>
             <th>First name</th>
             <th>Last name</th>
             <th>Date of birth</th>
             <th>Gender</th>
-            <th>Action</th>
+            <th>Role</th>
         </tr>
         </thead>
-        <tbody>
-        <tr th:each="flight: ${flights}">
-            <td th:text="${flight.id}"></td>
-            <td th:text="${flight.flightNumber}"></td>
-            <td th:text="${flight.departureDate.toLocalDate()}"></td>
-            <td th:text="${flight.departureDate.toLocalTime()}"></td>
-            <td th:text="${flight.origin}"></td>
-            <td th:text="${flight.destination}"></td>
-            <td th:text="${flight.estFlightDuration}"></td>
-            <td th:text="${flight.maxNumSeats}"></td>
-        </tr>
+        <tbody id="Users-table">
+
         </tbody>
     </table>
 </div>
@@ -432,7 +402,7 @@
 
 <script>
     const baseURI = 'http://localhost:8080/api/v1/admin';
-    const flightsTable = document.getElementById('flightTable');
+    const flightsTable = document.getElementById('Flights-table');
     const saveFlightButton = document.getElementById('saveFlight');
 
     const usersTable = document.getElementById('Users-table');
@@ -445,7 +415,7 @@
         const tr = document.createElement('tr');
         for (const prop in flight) {
             const td = document.createElement('td');
-            if (prop === 'user') {
+            if (prop === 'passenger') {
                 td.append(document.createTextNode(flight[prop].name));
             } else {
                 td.append(document.createTextNode(flight[prop]));
@@ -468,6 +438,7 @@
             td.append(document.createTextNode(value));
             tr.append(td);
         }
+
         usersTable.append(tr);
     }
 
@@ -545,7 +516,7 @@
     }
 
     async function saveUser() {
-        const loginInput = document.getElementById('login');
+        const usernameInput = document.getElementById('login');
         const passwordInput = document.getElementById('password');
         const firstNameInput = document.getElementById('firstName');
         const lastNameInput = document.getElementById('lastName');
@@ -553,13 +524,14 @@
         const genderInput = document.getElementById('gender');
 
         const user = {
-            username: loginInput.value,
+            username: usernameInput.value,
             password: passwordInput.value,
             firstName: firstNameInput.value,
             lastName: lastNameInput.value,
             birthDate: birthDateInput.value,
             gender: genderInput.value
         };
+
         console.log(user);
         const csrfHeaderName = csrfHeader.content;
         const csrfTokenValue = csrfToken.content;
@@ -575,7 +547,7 @@
         if (response.status === 201) {
             const loc = response.headers.get('location');
             const resp = await fetch(`http://localhost:8080${loc}`)
-            if(resp.status === 200) {
+            if (resp.status === 200) {
                 let user = await resp.json();
                 console.log(user);
                 addUser(user)
@@ -584,6 +556,7 @@
             }
         } else {
             alert('Error: ' + response.status);
+            console.error(await response.json());
         }
     }
 

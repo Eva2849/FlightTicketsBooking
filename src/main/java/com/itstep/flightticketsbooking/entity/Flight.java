@@ -41,7 +41,4 @@ public class Flight {
     @NonNull
     @Column(name = "maxNumSeats")
     private int maxNumSeats;
-
-    @ManyToOne
-    private User user;
 }

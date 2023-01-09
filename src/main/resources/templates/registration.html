@@ -75,7 +75,7 @@
 
         hr {
             background-color: rgb(99, 187, 52);
-            border: 0px;
+            border: 0;
             height: 4px;
             margin-bottom: 30px;
         }
@@ -98,23 +98,23 @@
 
     <div class="fillableField">
         <label for="password">Enter your password: </label>
-        <input type="password" id="password" name="password" required th:value="${user.password}" />
+        <input type="password" id="password" name="password" required th:value="${user.password}"/>
     </div>
 
     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
     <div class="fillableField">
         <label for="firstName">Enter your first name: </label>
-        <input type="text" id="firstName" name="firstName" required th:value="${user.firstName}" />
+        <input type="text" id="firstName" name="firstName" required th:value="${user.firstName}"/>
     </div>
 
     <div class="fillableField">
         <label for="lastName">Enter your last name: </label>
-        <input type="text" id="lastName" name="lastName" required />
+        <input type="text" id="lastName" name="lastName" required/>
     </div>
 
     <div class="fillableField">
         <label for="birthDate">Enter your date of birth: </label>
-        <input type="date" id="birthDate" name="birthDate" required />
+        <input type="date" id="birthDate" name="birthDate" required/>
     </div>
 
     <div class="fillableField">
