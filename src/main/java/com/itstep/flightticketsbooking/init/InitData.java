@@ -47,19 +47,19 @@ public class InitData implements CommandLineRunner {
 
         Flight fl1 = new Flight("LO3880", LocalDateTime.of(2022, Month.DECEMBER, 4, 12, 15), "Dnipro", "Riga", Duration.ofMinutes(80), 200);
         Flight fl2 = new Flight("W61091", LocalDateTime.of(2022, Month.DECEMBER, 4, 13, 45), "Dnipro", "London", Duration.ofMinutes(90), 80);
-        Flight fl3 = new Flight("W61011", LocalDateTime.of(2022, Month.DECEMBER, 4, 14, 05), "Dnipro", "Mombasa", Duration.ofMinutes(120), 60);
+        Flight fl3 = new Flight("W61011", LocalDateTime.of(2022, Month.DECEMBER, 4, 14, 5), "Dnipro", "Mombasa", Duration.ofMinutes(120), 60);
         Flight fl4 = new Flight("LH1363", LocalDateTime.of(2022, Month.DECEMBER, 4, 14, 18), "Dnipro", "Reykjavik", Duration.ofMinutes(140), 20);
-        Flight fl5 = new Flight("LO3880", LocalDateTime.of(2022, Month.DECEMBER, 4, 15, 06), "Dnipro", "Warsaw", Duration.ofMinutes(100), 18);
+        Flight fl5 = new Flight("LO3880", LocalDateTime.of(2022, Month.DECEMBER, 4, 15, 6), "Dnipro", "Warsaw", Duration.ofMinutes(100), 18);
         Flight fl6 = new Flight("W61001", LocalDateTime.of(2022, Month.DECEMBER, 4, 15, 12), "Dnipro", "Frankfurt", Duration.ofMinutes(60), 60);
         Flight fl7 = new Flight("W61221", LocalDateTime.of(2022, Month.DECEMBER, 4, 15, 35), "Dnipro", "Liverpool", Duration.ofMinutes(75), 5);
         Flight fl8 = new Flight("W61071", LocalDateTime.of(2022, Month.DECEMBER, 4, 15, 58), "Dnipro", "Dortmund", Duration.ofMinutes(93), 11);
-        Flight fl9 = new Flight("3Z7100", LocalDateTime.of(2022, Month.DECEMBER, 4, 16, 02), "Dnipro", "London", Duration.ofMinutes(103), 34);
-        Flight fl10 = new Flight("E45395", LocalDateTime.of(2022, Month.DECEMBER, 4, 16, 02), "Dnipro", "Doncaster–Sheffield", Duration.ofMinutes(67), 2);
+        Flight fl9 = new Flight("3Z7100", LocalDateTime.of(2022, Month.DECEMBER, 4, 16, 2), "Dnipro", "London", Duration.ofMinutes(103), 34);
+        Flight fl10 = new Flight("E45395", LocalDateTime.of(2022, Month.DECEMBER, 4, 16, 2), "Dnipro", "Doncaster–Sheffield", Duration.ofMinutes(67), 2);
         Flight fl11 = new Flight("E47423", LocalDateTime.of(2022, Month.DECEMBER, 4, 16, 14), "Dnipro", "Birmingham", Duration.ofMinutes(88), 2);
         Flight fl12 = new Flight("W61167", LocalDateTime.of(2022, Month.DECEMBER, 4, 16, 28), "Dnipro", "Las Palmas", Duration.ofMinutes(87), 18);
         Flight fl13 = new Flight("LO3886", LocalDateTime.of(2022, Month.DECEMBER, 4, 16, 44), "Dnipro", "RawenHolm", Duration.ofMinutes(66), 1);
-        Flight fl14 = new Flight("W61005", LocalDateTime.of(2022, Month.DECEMBER, 4, 17, 00), "Dnipro", "Gdansk", Duration.ofMinutes(84), 2);
-        Flight fl15 = new Flight("W91304", LocalDateTime.of(2022, Month.DECEMBER, 4, 17, 00), "Dnipro", "Moon", Duration.ofMinutes(240), 2);
+        Flight fl14 = new Flight("W61005", LocalDateTime.of(2022, Month.DECEMBER, 4, 17, 0), "Dnipro", "Gdansk", Duration.ofMinutes(84), 2);
+        Flight fl15 = new Flight("W91304", LocalDateTime.of(2022, Month.DECEMBER, 4, 17, 0), "Dnipro", "Moon", Duration.ofMinutes(240), 2);
 
         flightRepository.save(fl1);
         flightRepository.save(fl2);

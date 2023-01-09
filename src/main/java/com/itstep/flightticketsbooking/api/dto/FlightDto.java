@@ -26,8 +26,7 @@ public class FlightDto {
     @NotNull @NotBlank
     int maxNumSeats;
 
-    public Flight toEntityFlight(){
-        return new Flight(flightNumber,departureDate,origin,destination,estFlightDuration,maxNumSeats);
+    public Flight toEntityFlight() {
+        return new Flight(flightNumber, departureDate, origin, destination, estFlightDuration, maxNumSeats);
     }
-
 }

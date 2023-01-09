@@ -25,7 +25,6 @@ import java.util.Optional;
 public class AdminRestController {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
-
     private final FlightRepository flightRepository;
 
     @GetMapping("/users")
@@ -36,7 +35,7 @@ public class AdminRestController {
     @GetMapping("/users/{id}")
     public ResponseEntity<?> showUser(@PathVariable Long id) {
         Optional<User> optionalUser = userRepository.findById(id);
-        if(optionalUser.isPresent()) {
+        if (optionalUser.isPresent()) {
             return ResponseEntity.ok(optionalUser.get());
         }
         return ResponseEntity.badRequest()
@@ -67,21 +66,21 @@ public class AdminRestController {
     }
 
     @GetMapping("/flights/{id}")
-    public ResponseEntity<?> showFlight(@PathVariable Long id){
+    public ResponseEntity<?> showFlight(@PathVariable Long id) {
         Optional<Flight> optionalFlight = flightRepository.findById(id);
-        if(optionalFlight.isPresent()){
+        if (optionalFlight.isPresent()) {
             return ResponseEntity.ok(optionalFlight.get());
         }
         return ResponseEntity.badRequest().body("Flight not found");
     }
 
     @PostMapping("/flights")
-    public ResponseEntity<?> createFlight(@RequestBody @Validated FlightDto flightDto,BindingResult bindingResult){
-        if(!bindingResult.hasErrors()){
+    public ResponseEntity<?> createFlight(@RequestBody @Validated FlightDto flightDto, BindingResult bindingResult) {
+        if (!bindingResult.hasErrors()) {
             Flight flight = flightDto.toEntityFlight();
             try {
-                flight=flightRepository.save(flight);
-            }catch (Exception e){
+                flight = flightRepository.save(flight);
+            } catch (Exception e) {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrorResponse(e.getMessage()));
             }
             URI uri = URI.create("/api/v1/admin/flights/" + flight.getId());

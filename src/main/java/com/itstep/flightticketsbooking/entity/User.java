@@ -65,14 +65,14 @@ public class User implements UserDetails {
     @ManyToMany(mappedBy = "users", cascade = CascadeType.ALL)
     private Set<Role> roles = new HashSet<>();
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
-    private List<Flight> flights = new ArrayList<>();
-
-    public void addFlight(Flight flight) {
-        flight.setUser(this);
-        flights.add(flight);
-    }
+//    @JsonIgnore
+//    @OneToMany(mappedBy = "passenger", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+//    private List<Flight> flights = new ArrayList<>();
+//
+//    public void addFlight(Flight flight) {
+//        flight.setPassenger(this);
+//        flights.add(flight);
+//    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -85,21 +85,25 @@ public class User implements UserDetails {
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonExpired() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonLocked() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isEnabled() {
         return true;
     }

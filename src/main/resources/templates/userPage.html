@@ -56,7 +56,7 @@
 
         th {
             position: sticky;
-            top: 0px;
+            top: 0;
         }
 
         table {
@@ -72,7 +72,7 @@
             text-align: center;
             border-collapse: collapse;
             position: sticky;
-            top: 0px;
+            top: 0;
             background-color: rgb(106, 226, 200);
         }
 
@@ -85,7 +85,6 @@
 
         #h2ForFlights {
             color: rgb(238, 231, 231);
-
         }
 
         #passengerTable {
@@ -95,7 +94,7 @@
             text-align: center;
             border-collapse: collapse;
             position: sticky;
-            top: 0px;
+            top: 0;
         }
 
         #passengers {
@@ -114,7 +113,7 @@
             text-align: center;
             border-collapse: collapse;
             position: sticky;
-            top: 0px;
+            top: 0;
             background-color: rgb(106, 226, 200);
         }
 
@@ -127,11 +126,9 @@
 
         #h2ForPassenger {
             color: rgb(238, 231, 231);
-
         }
 
         #findSeatsDiv {
-            margin-top: 27px;
             margin-top: 27px;
             margin-left: 60px;
         }
@@ -154,17 +151,15 @@
             width: 600px;
             margin-left: 28%;
             background-color: rgb(230, 222, 222);
-
         }
 
         #forName {
             float: left;
-            margin-right: 35px;
             margin-left: 40px;
             margin-right: 47px;
         }
 
-        #forPasportData {
+        #forPassportData {
             float: left;
             margin-right: 35px;
             margin-top: 27px;
@@ -182,7 +177,7 @@
             margin-right: 22px;
         }
 
-        #forFlifhtNumber {
+        #forFlightNumber {
             margin-top: 27px;
             margin-left: 63px;
         }
@@ -197,7 +192,6 @@
 
 <body style="font-family: sans-serif; border : 2px solid gray ; padding :20px;">
 <nav>
-
     <div class="main-option">
         <li class="toHome"><a class="home" th:href="@{/}">Main page</a></li>
         <li class="toLogout" sec:authorize="isAuthenticated()"><a class="logout" th:href="@{/logout}">Logout</a></li>
@@ -215,35 +209,23 @@
         Welcome <span sec:authentication="name"></span>!
     </li>
 
-
 </nav>
 <h1 style="color: green">User page</h1>
-<div id="flightHead"><h1 id="h2ForFlights">AVALIABLE FLIGHTS</h1></div>
+<div id="flightHead"><h1 id="h2ForFlights">AVAILABLE FLIGHTS</h1></div>
 <div class="flights">
-    <table id="flightTable">
+    <table>
         <thead id="flightHeadTable">
         <tr>
-            <!--<th >ID</th>-->
+            <th >ID</th>
             <th>Flight number</th>
-            <th>Departure date</th>
-            <th>Time</th>
+            <th>Departure date and time</th>
             <th>Origin</th>
             <th>Destination</th>
             <th>Flight duration</th>
             <th>Max number of seats</th>
         </tr>
         </thead>
-        <tbody>
-        <tr th:each="flight: ${flights}">
-            <!--<td th:text="${flight.id}"></td>-->
-            <td th:text="${flight.flightNumber}"></td>
-            <td th:text="${flight.departureDate}"></td>
-            <td th:text="${flight.time}"></td>
-            <td th:text="${flight.origin}"></td>
-            <td th:text="${flight.destination}"></td>
-            <td th:text="${flight.estFlightDuration}"></td>
-            <td th:text="${flight.maxNumSeats}"></td>
-        </tr>
+        <tbody id="Flights-table">
 
         </tbody>
     </table>
@@ -264,30 +246,34 @@
     <div style="margin-top: 10px; margin-bottom: 10px;">
         <div id="forName">
             <label for="firstName">First name: </label>
-            <input type="text" id="firstName" name="firstName">
+            <input type="text" id="firstName" name="firstName" required>
         </div>
         <div id="forLastName">
             <label for="lastName">Last name: </label>
-            <input type="text" id="lastName" name="lastName">
+            <input type="text" id="lastName" name="lastName" required>
         </div>
-        <div id="forPasportData">
+        <div id="forPassportData">
             <label for="passportData">Passport: </label>
-            <input type="text" id="passportData" name="passportData">
+            <input type="text" id="passportData" name="passportData" required>
         </div>
         <div id="forBirthDate">
             <label for="birthDate">Date of birth: </label>
-            <input type="text" id="birthDate" name="birthDate">
+            <input type="date" id="birthDate" name="birthDate" required>
         </div>
         <div id="forGender">
             <label for="gender">Gender: </label>
-            <input type="text" id="gender" name="gender">
+            <select id="gender" name="gender">
+                <option value="MALE">Male</option>
+                <option value="FEMALE">Female</option>
+                <option value="UNKNOWN">Unknown</option>
+            </select>
         </div>
-        <div id="forFlifhtNumber">
+        <div id="forFlightNumber">
             <label for="flightNumber">Flight number: </label>
-            <input type="text" id="flightNumber" name="flightNumber">
+            <input type="text" id="flightNumber" name="flightNumber" required>
         </div>
         <div>
-            <input type="submit" id="userSave"/>
+            <input type="submit" id="passengerSave" value="SAVE PASSENGER"/>
         </div>
     </div>
 </div>
@@ -297,7 +283,7 @@
     <table id="passengerTable">
         <thead id="passengerTableHead">
         <tr>
-            <!--<th>ID</th>-->
+            <th>ID</th>
             <th>First name</th>
             <th>Last name</th>
             <th>Passport data</th>
@@ -314,9 +300,25 @@
 </div>
 
 <script>
-    const baseURI = 'http://localhost:8080/userPage/api/v1';
+    const baseURI = 'http://localhost:8080/api/v1/user';
+    const flightsTable = document.getElementById('Flights-table');
+
     const passengersTable = document.getElementById('Passengers-table');
     const savePassengerButton = document.getElementById('passengerSave');
+
+    function addFlight(flight) {
+        const tr = document.createElement('tr');
+        for (const prop in flight) {
+            const td = document.createElement('td');
+            if (prop === 'passenger') {
+                td.append(document.createTextNode(flight[prop].name));
+            } else {
+                td.append(document.createTextNode(flight[prop]));
+            }
+            tr.append(td);
+        }
+        flightsTable.append(tr);
+    }
 
     function addPassenger(passenger) {
         const tr = document.createElement('tr');
@@ -335,29 +337,33 @@
         });
     }
 
-    function fillPassengers(passengers) {
-        const passengerSelect = document.getElementById('passengers');
-        passengers.forEach(passenger => {
-            const option = document.createElement('option');
-            option.value = passenger.id;
-            option.append(document.createTextNode(passenger.name));
-            passengerSelect.append(option);
+    function fillTableFlights(flights) {
+        flightsTable.innerHTML = '';
+        flights.forEach(flight => {
+            addFlight(flight);
         });
     }
 
-    async function loadPassengers() {
-        const response = await fetch(`${baseURI}/passengers`, {
+    async function loadFlights() {
+        const response = await fetch(`${baseURI}/flights`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json'
             }
         });
-        const passengers = await response.json();
-        console.log(passengers);
-        fillTablePassengers(passengers)
-        fillPassengers(passengers);
+        const flights = await response.json();
+        console.log(flights);
+        fillTableFlights(flights);
     }
 
+    async function loadPassengers() {
+        const response = await fetch(`${baseURI}/passengers`);
+        const passengers = await response.json();
+        console.log(passengers);
+        fillTablePassengers(passengers);
+    }
+
+    window.addEventListener('load', loadFlights);
     window.addEventListener('load', loadPassengers);
 
     async function savePassenger() {
@@ -384,12 +390,20 @@
         });
 
         console.log(response.status);
+
         if (response.status === 201) {
             const loc = response.headers.get('location');
             const resp = await fetch(`http://localhost:8080${loc}`)
-            addPassenger(await resp.json())
+            if (resp.status === 200) {
+                let passenger = await resp.json();
+                console.log(passenger);
+                addPassenger(passenger)
+            } else {
+                alert('Error: ' + (await resp.text()));
+            }
         } else {
             alert('Error: ' + response.status);
+            console.error(await response.json());
         }
     }
 
