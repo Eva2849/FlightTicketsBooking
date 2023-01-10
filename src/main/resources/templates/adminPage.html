@@ -166,7 +166,7 @@
             float: left;
             margin-top: 10px;
             margin-bottom: 10px;
-            margin-left: 310px;
+            margin-left: 21%;
             margin-right: 45px;
         }
 
@@ -270,6 +270,24 @@
             background-color: rgb(99, 187, 52);
             border-radius: 10px;
         }
+        #sortByFlightNumber,#sortByDestination,#sortByFlightDuration,#sortByMaxNumberOfSeats{
+            width: 100px;
+            height: 25px;
+            background-color: darkkhaki;
+            border-radius: 30px;
+            text-align: center;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+        #sortedButtons{
+            /*border: 1px solid black;*/
+            margin-top: 7px;
+        }
+        #h3ForSortHead{
+            /*border: 1px solid black;*/
+            float: left;
+        }
     </style>
 </head>
 <body style="font-family: sans-serif; border : 2px solid gray ; padding :20px;">
@@ -314,6 +332,13 @@
 
         </tbody>
     </table>
+</div>
+<div id="h3ForSortHead"><h3>Sort flights by:</h3></div>
+<div id="sortedButtons">
+    <button id="sortByFlightNumber">Flight number</button>
+    <button id="sortByDestination">Destination</button>
+    <button id="sortByFlightDuration">Flight duration</button>
+    <button id="sortByMaxNumberOfSeats">Max seats</button>
 </div>
 
 <div id="headFlightForm"><h1 id="h1FlightForm">Create new flight:</h1></div>
@@ -565,6 +590,61 @@
 
     saveFlightButton.addEventListener('click', saveFlight);
     saveUserButton.addEventListener('click', saveUser);
+
+    /*сортировки*/
+    function sortBy(field){
+        return (a,b)=> a[field] >b[field] ? 1:-1;
+    }
+
+    const sortByFlightNumberButton = document.getElementById("sortByFlightNumber");
+    const sortByDestinationButton = document.getElementById("sortByDestination");
+    const sortByFlightDurationButton = document.getElementById("sortByFlightDuration");
+    const sortByMaxNumberOfSeatsButton = document.getElementById("sortByMaxNumberOfSeats");
+
+    sortByFlightNumberButton.addEventListener('click',async function () {
+        const response = await fetch(`${baseURI}/flights`, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+        const flights = await response.json();
+        flights.sort(sortBy('flightNumber'))
+        fillTableFlights(flights);
+    });
+    sortByDestinationButton.addEventListener('click',async function () {
+        const response = await fetch(`${baseURI}/flights`, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+        const flights = await response.json();
+        flights.sort(sortBy('destination'))
+        fillTableFlights(flights);
+    });
+    sortByFlightDurationButton.addEventListener('click',async function () {
+        const response = await fetch(`${baseURI}/flights`, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+        const flights = await response.json();
+        flights.sort(sortBy('estFlightDuration'))
+        fillTableFlights(flights);
+    });
+    sortByMaxNumberOfSeatsButton.addEventListener('click',async function () {
+        const response = await fetch(`${baseURI}/flights`, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+        const flights = await response.json();
+        flights.sort(sortBy('maxNumSeats'))
+        fillTableFlights(flights);
+    });
 
 </script>
 </body>
