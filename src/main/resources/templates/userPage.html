@@ -201,6 +201,36 @@
             /*border: 1px solid black;*/
             float: left;
         }
+        .delete{
+            color: brown;
+            cursor: pointer;
+        }
+        .update{
+            color: green;
+            cursor: pointer;
+        }
+        #flightHead2{
+            border: 1px solid;
+            text-align: center;
+            width: 100%;
+            background-color: rgb(80, 169, 180);
+        }
+        #h2ForFlights2{
+            color: rgb(238, 231, 231);
+        }
+        #flightHeadTable2{
+            width: auto;
+            height: 50px;
+            border: 1px solid black;
+            text-align: center;
+            border-collapse: collapse;
+            position: sticky;
+            top: 0;
+            background-color: rgb(106, 226, 200);
+        }
+        #Flights-table2{
+
+        }
 
     </style>
 </head>
@@ -245,6 +275,7 @@
         </tbody>
     </table>
 </div>
+
 <div id="h3ForSortHead"><h3>Sort flights by:</h3></div>
 <div id="sortedButtons">
     <button id="sortByFlightNumber">Flight number</button>
@@ -261,6 +292,25 @@
     <div>
         <input type="submit" id="seatsFind" value="find"/>
     </div>
+</div>
+<div id="flightHead2"><h1 id="h2ForFlights2">ANSWER</h1></div>
+<div class="flights">
+    <table>
+        <thead id="flightHeadTable2">
+        <tr>
+            <th >ID</th>
+            <th>Flight number</th>
+            <th>Departure date and time</th>
+            <th>Origin</th>
+            <th>Destination</th>
+            <th>Flight duration</th>
+            <th>Max number of seats</th>
+        </tr>
+        </thead>
+        <tbody id="Flights-table2">
+
+        </tbody>
+    </table>
 </div>
 
 <div id="forAddPassengers">
@@ -313,6 +363,7 @@
             <th>Gender</th>
             <th>Flight number</th>
             <th>Destination</th>
+            <th>Action</th>
         </tr>
         </thead>
         <tbody id="Passengers-table">
@@ -349,6 +400,13 @@
             td.append(document.createTextNode(passenger[prop]));
             tr.append(td);
         }
+        const deleteButton = document.createElement("button");
+        deleteButton.innerText = "DELETE";
+        deleteButton.className = "delete";
+        const update = document.createElement("button");
+        update.innerText = "UPDATE";
+        update.className = "update";
+        tr.append(deleteButton,update);
         passengersTable.append(tr);
     }
 
@@ -483,9 +541,42 @@
             }
         });
         const flights = await response.json();
-        flights.sort(sortBy('maxNumSeats'))
+        flights.sort(sortBy('maxNumSeats'));
         fillTableFlights(flights);
+
     });
+
+    // поиски
+
+    const usrFindNumber = document.getElementById('numberOfSeats');
+    const faindSubmit = document.getElementById('seatsFind');
+    const newFlightTable = document.getElementById('Flights-table2');
+    let findNumber = usrFindNumber.value;
+    function fillTableFlights2(flights) {
+        newFlightTable.innerHTML = '';
+        flights.forEach(flight => {
+            addFlight(flight);
+        });
+    }
+    faindSubmit.addEventListener('click',async function(){
+        const response = await fetch(`${baseURI}/flights`, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+        const flights = await response.json();
+
+        const getByName =(arr,name)=> arr.find(el =>el.title === name);
+        console.log(getByName(flights,'maxNumSeats'));
+        flights.sort(flight => {
+            if(flight.maxNumSeats >=findNumber ){
+                fillTableFlights2(flight);
+            }
+        })
+
+    });
+
 
 
 </script>
