@@ -270,7 +270,8 @@
             background-color: rgb(99, 187, 52);
             border-radius: 10px;
         }
-        #sortByFlightNumber,#sortByDestination,#sortByFlightDuration,#sortByMaxNumberOfSeats{
+
+        #sortByFlightNumber, #sortByDestination, #sortByFlightDuration, #sortByMaxNumberOfSeats {
             width: 100px;
             height: 25px;
             background-color: darkkhaki;
@@ -280,19 +281,23 @@
             margin-bottom: 10px;
             cursor: pointer;
         }
-        #sortedButtons{
+
+        #sortedButtons {
             /*border: 1px solid black;*/
             margin-top: 7px;
         }
-        #h3ForSortHead{
+
+        #h3ForSortHead {
             /*border: 1px solid black;*/
             float: left;
         }
-        .delete{
+
+        .delete {
             color: brown;
             cursor: pointer;
         }
-        .update{
+
+        .update {
             color: green;
             cursor: pointer;
         }
@@ -384,7 +389,7 @@
 
 <div id="userHead"><h2 id="h1ForUser">AVAILABLE USERS DATA</h2></div>
 <div class="forUserTableDiv">
-    <table >
+    <table>
         <thead id="userHeadTable">
         <tr>
             <th>ID</th>
@@ -453,11 +458,11 @@
         const tr = document.createElement('tr');
         for (const prop in flight) {
             const td = document.createElement('td');
-            if (prop === 'passenger') {
-                td.append(document.createTextNode(flight[prop].name));
-            } else {
-                td.append(document.createTextNode(flight[prop]));
-            }
+            // if (prop === 'passenger') {
+            //     td.append(document.createTextNode(flight[prop].name));
+            // } else {
+            td.append(document.createTextNode(flight[prop]));
+            // }
             tr.append(td);
         }
         const deleteButton = document.createElement("button");
@@ -466,7 +471,7 @@
         const update = document.createElement("button");
         update.innerText = "UPDATE";
         update.className = "update";
-        tr.append(deleteButton,update);
+        tr.append(deleteButton, update);
         flightsTable.append(tr);
     }
 
@@ -483,13 +488,15 @@
             td.append(document.createTextNode(value));
             tr.append(td);
         }
+        const td = document.createElement('td');
         const deleteButton = document.createElement("button");
         deleteButton.innerText = "DELETE";
         deleteButton.className = "delete";
         const update = document.createElement("button");
         update.innerText = "UPDATE";
         update.className = "update";
-        tr.append(deleteButton,update);
+        td.append(deleteButton, update);
+        tr.append(td);
         tr.className = "tableRow";
         usersTable.append(tr);
     }
@@ -531,24 +538,27 @@
     window.addEventListener('load', loadUsers);
 
     async function saveFlight() {
+        console.log("saveFlight")
         const flightNumberInput = document.getElementById('flightNumber');
         const departureDateInput = document.getElementById('departureDate');
-        const timeInput = document.getElementById('time');
         const originInput = document.getElementById('origin');
         const destinationInput = document.getElementById('destination');
         const estFlightDurationInput = document.getElementById('estFlightDuration');
         const maxNumSeatsInput = document.getElementById('maxNumSeats');
-        const usersSelect = document.getElementById('users');
 
+        console.dir(flightNumberInput)
+        console.dir(departureDateInput)
+        console.dir(originInput)
+        console.dir(destinationInput)
+        console.dir(estFlightDurationInput)
+        console.dir(maxNumSeatsInput)
         const flight = {
             flightNumber: flightNumberInput.value,
             departureDate: departureDateInput.value,
-            time: timeInput.value,
             origin: originInput.value,
             destination: destinationInput.value,
             estFlightDuration: estFlightDurationInput.value,
             maxNumSeats: maxNumSeatsInput.value,
-            usersId: usersSelect.value
         };
         const response = await fetch(`${baseURI}/flights`, {
             method: 'POST',
@@ -616,8 +626,8 @@
     saveUserButton.addEventListener('click', saveUser);
 
     /*сортировки*/
-    function sortBy(field){
-        return (a,b)=> a[field] >b[field] ? 1:-1;
+    function sortBy(field) {
+        return (a, b) => a[field] > b[field] ? 1 : -1;
     }
 
     const sortByFlightNumberButton = document.getElementById("sortByFlightNumber");
@@ -625,7 +635,7 @@
     const sortByFlightDurationButton = document.getElementById("sortByFlightDuration");
     const sortByMaxNumberOfSeatsButton = document.getElementById("sortByMaxNumberOfSeats");
 
-    sortByFlightNumberButton.addEventListener('click',async function () {
+    sortByFlightNumberButton.addEventListener('click', async function () {
         const response = await fetch(`${baseURI}/flights`, {
             method: 'GET',
             headers: {
@@ -636,7 +646,7 @@
         flights.sort(sortBy('flightNumber'))
         fillTableFlights(flights);
     });
-    sortByDestinationButton.addEventListener('click',async function () {
+    sortByDestinationButton.addEventListener('click', async function () {
         const response = await fetch(`${baseURI}/flights`, {
             method: 'GET',
             headers: {
@@ -647,7 +657,7 @@
         flights.sort(sortBy('destination'))
         fillTableFlights(flights);
     });
-    sortByFlightDurationButton.addEventListener('click',async function () {
+    sortByFlightDurationButton.addEventListener('click', async function () {
         const response = await fetch(`${baseURI}/flights`, {
             method: 'GET',
             headers: {
@@ -658,7 +668,7 @@
         flights.sort(sortBy('estFlightDuration'))
         fillTableFlights(flights);
     });
-    sortByMaxNumberOfSeatsButton.addEventListener('click',async function () {
+    sortByMaxNumberOfSeatsButton.addEventListener('click', async function () {
         const response = await fetch(`${baseURI}/flights`, {
             method: 'GET',
             headers: {
@@ -671,14 +681,37 @@
     });
 
     // удаление и апдэйт
-    const trW = document.getElementsByClassName("tableRow");
+    // const trW = document.getElementById('Users-table');
 
-    trW.onclick = function (e){
-        const deleteButton = e.target.closest(".delete");
-        if(!deleteButton){
-            return;
+    usersTable.onclick = async function (e) {
+        if (e.target.nodeName === 'BUTTON' && e.target.classList.contains('delete')) {
+            console.log('delete', e.target)
+
+            if (!confirm("Are you sure you want to delete this user?")) {
+                return;
+            }
+
+            const id = e.target.parentElement.parentElement.firstElementChild.innerHTML;
+            console.log(id)
+
+            const csrfHeaderName = csrfHeader.content;
+            const csrfTokenValue = csrfToken.content;
+
+            const response = await fetch(`${baseURI}/users/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    [csrfHeaderName]: csrfTokenValue
+                },
+
+            });
+
+            console.log(response.status)
+            if (response.status === 204) {
+                e.target.parentElement.parentElement.remove();
+            } else {
+                alert("Error")
+            }
         }
-        deleteButton.parentElement.remove();
     }
 
 </script>

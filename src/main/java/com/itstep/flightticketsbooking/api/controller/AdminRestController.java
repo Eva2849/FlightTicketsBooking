@@ -42,6 +42,17 @@ public class AdminRestController {
                 .body(new ErrorResponse("User not found"));
     }
 
+    @DeleteMapping("/users/{id}")
+    public ResponseEntity<?> deleteUser(@PathVariable Long id) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isPresent()) {
+            userRepository.delete(optionalUser.get());
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.badRequest()
+                .body(new ErrorResponse("User not found"));
+    }
+
     @PostMapping("/users")
     public ResponseEntity<?> createUser(@RequestBody @Validated UserDto userDto, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {

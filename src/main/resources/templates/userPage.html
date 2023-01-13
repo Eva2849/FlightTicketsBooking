@@ -571,7 +571,7 @@
         console.log(getByName(flights,'maxNumSeats'));
         flights.sort(flight => {
             if(flight.maxNumSeats >=findNumber ){
-                fillTableFlights2(flight);
+                addFlight(flight);
             }
         })
 
