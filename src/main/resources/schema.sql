@@ -19,6 +19,7 @@ create table Passengers
     passportData varchar(200) not null,
     birthDate    date         not null,
     gender       varchar(100) not null,
+
     primary key (id)
 );
 

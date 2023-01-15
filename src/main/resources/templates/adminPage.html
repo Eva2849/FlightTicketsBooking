@@ -546,12 +546,6 @@
         const estFlightDurationInput = document.getElementById('estFlightDuration');
         const maxNumSeatsInput = document.getElementById('maxNumSeats');
 
-        console.dir(flightNumberInput)
-        console.dir(departureDateInput)
-        console.dir(originInput)
-        console.dir(destinationInput)
-        console.dir(estFlightDurationInput)
-        console.dir(maxNumSeatsInput)
         const flight = {
             flightNumber: flightNumberInput.value,
             departureDate: departureDateInput.value,
@@ -560,20 +554,38 @@
             estFlightDuration: estFlightDurationInput.value,
             maxNumSeats: maxNumSeatsInput.value,
         };
+        console.log(flight);
+        const csrfHeaderName = csrfHeader.content;
+        const csrfTokenValue = csrfToken.content;
         const response = await fetch(`${baseURI}/flights`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                [csrfHeaderName]: csrfTokenValue
             },
             body: JSON.stringify(flight)
         });
         console.log(response.status);
+        // if (response.status === 201) {
+        //     const loc = response.headers.get('location');
+        //     const resp = await fetch(`http://localhost:8080${loc}`)
+        //     addFlight(await resp.json())
+        // } else {
+        //     alert('Error: ' + response.status);
+        // }
         if (response.status === 201) {
             const loc = response.headers.get('location');
             const resp = await fetch(`http://localhost:8080${loc}`)
-            addFlight(await resp.json())
+            if (resp.status === 200) {
+                let flight = await resp.json();
+                console.log(flight);
+                addUser(flight)
+            } else {
+                alert('Error: ' + (await resp.text()));
+            }
         } else {
             alert('Error: ' + response.status);
+            console.error(await response.json());
         }
     }
 

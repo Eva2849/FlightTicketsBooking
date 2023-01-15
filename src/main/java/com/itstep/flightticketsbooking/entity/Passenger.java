@@ -39,6 +39,8 @@ public class Passenger {
     @Column(name = "gender")
     private Gender gender;
 
+
+
     @ManyToOne
     private User user;
 }
