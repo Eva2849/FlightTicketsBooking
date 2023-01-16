@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Flights</title>
+    <meta name="csrf-token" id="csrf-token" th:content="${_csrf.token}"/>
+    <meta name="csrf-header" id="csrf-header" th:content="${_csrf.headerName}"/>
     <style>
         .main-option {
             width: 185px;
@@ -57,6 +59,12 @@
         th {
             position: sticky;
             top: 0;
+        }
+        hr {
+            background-color: rgb(160, 185, 16);
+            border: 0;
+            height: 4px;
+            margin-bottom: 20px;
         }
 
         table {
@@ -128,12 +136,12 @@
             color: rgb(238, 231, 231);
         }
 
-        #findSeatsDiv {
+        #findSeatsDiv,#findPlaceDiv {
             margin-top: 27px;
             margin-left: 60px;
         }
 
-        #seatsFind {
+        #seatsFind,#placeFind {
             margin-left: 20px;
             width: 60px;
             background-color: rgb(99, 187, 52);
@@ -283,6 +291,7 @@
     <button id="sortByFlightDuration">Flight duration</button>
     <button id="sortByMaxNumberOfSeats">Max seats</button>
 </div>
+<hr/>
 
 <div id="findSeatsDiv">
     <div style="float: left;">
@@ -293,6 +302,16 @@
         <input type="submit" id="seatsFind" value="find"/>
     </div>
 </div>
+<div id="findPlaceDiv">
+    <div style="float: left;">
+        <label for="nameOfPlace">Where do you want to fly? </label>
+        <input type="text" id="nameOfPlace" name="nameOfPlace">
+    </div>
+    <div>
+        <input type="submit" id="placeFind" value="find"/>
+    </div>
+</div>
+
 <div id="flightHead2"><h1 id="h2ForFlights2">ANSWER</h1></div>
 <div class="flights">
     <table>
@@ -312,6 +331,7 @@
         </tbody>
     </table>
 </div>
+<hr/>
 
 <div id="forAddPassengers">
     <h1 id="addPassengerH1">Please enter passenger data:</h1>
@@ -362,7 +382,6 @@
             <th>Date of birth</th>
             <th>Gender</th>
             <th>Flight number</th>
-            <th>Destination</th>
             <th>Action</th>
         </tr>
         </thead>
@@ -403,13 +422,16 @@
             td.append(document.createTextNode(passenger[prop]));
             tr.append(td);
         }
+        const td = document.createElement('td');
         const deleteButton = document.createElement("button");
         deleteButton.innerText = "DELETE";
         deleteButton.className = "delete";
         const update = document.createElement("button");
         update.innerText = "UPDATE";
         update.className = "update";
-        tr.append(deleteButton,update);
+        td.append(deleteButton,update);
+        tr.append(td);
+        tr.className = "tableRow";
         passengersTable.append(tr);
     }
 
@@ -497,6 +519,7 @@
     }
 
     savePassengerButton.addEventListener('click', savePassenger);
+
     /*сортировки*/
     function sortBy(field){
         return (a,b)=> a[field] >b[field] ? 1:-1;
@@ -558,6 +581,8 @@
     const usrFindNumber = document.getElementById('numberOfSeats');
     const faindSubmit = document.getElementById('seatsFind');
     const newFlightTable = document.getElementById('Flights-table2');
+    const usrFindPlace = document.getElementById('nameOfPlace');
+    const faindPlaceSubmit = document.getElementById('placeFind');
 
     function fillTableFlights2(flights) {
         newFlightTable.innerHTML = '';
@@ -594,6 +619,53 @@
                 addFlight2(flight);
             }
         })
+    });
+    faindPlaceSubmit.addEventListener('click',async function(){
+        newFlightTable.innerHTML = '';
+        const response = await fetch(`${baseURI}/flights`, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+        const flights = await response.json();
+        let findPlace = usrFindPlace.value;
+        flights.sort(flight => {
+            if(flight.destination ==findPlace ){
+                addFlight2(flight);
+            }
+        })
+    });
+    // удаление и апдэйт
+    passengersTable.addEventListener('click', async function(e){
+        if (e.target.nodeName === 'BUTTON' && e.target.classList.contains('delete')) {
+            console.log('delete', e.target)
+
+            if (!confirm("Are you sure you want to delete this passenger?")) {
+                return;
+            }
+
+            const id = e.target.parentElement.parentElement.firstElementChild.innerHTML;
+            console.log(id)
+
+            const csrfHeaderName = csrfHeader.content;
+            const csrfTokenValue = csrfToken.content;
+
+            const response = await fetch(`${baseURI}/passengers/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    [csrfHeaderName]: csrfTokenValue
+                },
+
+            });
+
+            console.log(response.status)
+            if (response.status === 204) {
+                e.target.parentElement.parentElement.remove();
+            } else {
+                alert("Error")
+            }
+        }
     });
 
 </script>

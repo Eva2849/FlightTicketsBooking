@@ -55,6 +55,16 @@ public class UserRestController {
         return ResponseEntity.badRequest()
                 .body(bindingResult.getAllErrors());
     }
+    @DeleteMapping("/passengers/{id}")
+    public ResponseEntity<?> deletePassenger(@PathVariable Long id) {
+        Optional<Passenger> optionalPassenger = passengerRepository.findById(id);
+        if (optionalPassenger.isPresent()) {
+            passengerRepository.delete(optionalPassenger.get());
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.badRequest()
+                .body(new ErrorResponse("Flight not found"));
+    }
 
     @GetMapping("/flights")
     public ResponseEntity<?> listFlights() {

@@ -52,6 +52,16 @@ public class AdminRestController {
         return ResponseEntity.badRequest()
                 .body(new ErrorResponse("User not found"));
     }
+    @DeleteMapping("/flights/{id}")
+    public ResponseEntity<?> deleteFlight(@PathVariable Long id) {
+        Optional<Flight> optionalFlight = flightRepository.findById(id);
+        if (optionalFlight.isPresent()) {
+            flightRepository.delete(optionalFlight.get());
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.badRequest()
+                .body(new ErrorResponse("Flight not found"));
+    }
 
     @PostMapping("/users")
     public ResponseEntity<?> createUser(@RequestBody @Validated UserDto userDto, BindingResult bindingResult) {
