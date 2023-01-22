@@ -60,6 +60,7 @@
             position: sticky;
             top: 0;
         }
+
         hr {
             background-color: rgb(160, 185, 16);
             border: 0;
@@ -136,12 +137,12 @@
             color: rgb(238, 231, 231);
         }
 
-        #findSeatsDiv,#findPlaceDiv {
+        #findSeatsDiv, #findPlaceDiv {
             margin-top: 27px;
             margin-left: 60px;
         }
 
-        #seatsFind,#placeFind {
+        #seatsFind, #placeFind {
             margin-left: 20px;
             width: 60px;
             background-color: rgb(99, 187, 52);
@@ -161,28 +162,32 @@
             background-color: rgb(230, 222, 222);
         }
 
-        #forName{
+        #forName {
             float: left;
             margin-right: 35px;
             margin-left: 40px;
             margin-right: 47px;
         }
-        #forPasportData{
+
+        #forPasportData {
             float: left;
             margin-right: 35px;
             margin-top: 27px;
             margin-left: 52px;
         }
-        #forBirthDate{
+
+        #forBirthDate {
             margin-top: 27px;
         }
-        #forGender{
+
+        #forGender {
             float: left;
             margin-top: 27px;
             margin-left: 63px;
             margin-right: 90px;
         }
-        #forFlifhtNumber{
+
+        #forFlifhtNumber {
             margin-top: 27px;
             margin-left: 63px;
         }
@@ -191,7 +196,8 @@
             margin-top: 27px;
             margin-left: 42%;
         }
-        #sortByFlightNumber,#sortByDestination,#sortByFlightDuration,#sortByMaxNumberOfSeats{
+
+        #sortByFlightNumber, #sortByDestination, #sortByFlightDuration, #sortByMaxNumberOfSeats {
             width: 100px;
             height: 25px;
             background-color: darkkhaki;
@@ -201,32 +207,39 @@
             margin-bottom: 10px;
             cursor: pointer;
         }
-        #sortedButtons{
+
+        #sortedButtons {
             /*border: 1px solid black;*/
             margin-top: 7px;
         }
-        #h3ForSortHead{
+
+        #h3ForSortHead {
             /*border: 1px solid black;*/
             float: left;
         }
-        .delete{
+
+        .delete {
             color: brown;
             cursor: pointer;
         }
-        .update{
+
+        .update {
             color: green;
             cursor: pointer;
         }
-        #flightHead2{
+
+        #flightHead2 {
             border: 1px solid;
             text-align: center;
             width: 100%;
             background-color: rgb(80, 169, 180);
         }
-        #h2ForFlights2{
+
+        #h2ForFlights2 {
             color: rgb(238, 231, 231);
         }
-        #flightHeadTable2{
+
+        #flightHeadTable2 {
             width: auto;
             height: 50px;
             border: 1px solid black;
@@ -236,7 +249,8 @@
             top: 0;
             background-color: rgb(106, 226, 200);
         }
-        #Flights-table2{
+
+        #Flights-table2 {
 
         }
 
@@ -269,7 +283,7 @@
     <table>
         <thead id="flightHeadTable">
         <tr>
-            <th >ID</th>
+            <th>ID</th>
             <th>Flight number</th>
             <th>Departure date and time</th>
             <th>Origin</th>
@@ -317,7 +331,7 @@
     <table>
         <thead id="flightHeadTable2">
         <tr>
-            <th >ID</th>
+            <th>ID</th>
             <th>Flight number</th>
             <th>Departure date and time</th>
             <th>Origin</th>
@@ -429,7 +443,7 @@
         const update = document.createElement("button");
         update.innerText = "UPDATE";
         update.className = "update";
-        td.append(deleteButton,update);
+        td.append(deleteButton, update);
         tr.append(td);
         tr.className = "tableRow";
         passengersTable.append(tr);
@@ -521,8 +535,8 @@
     savePassengerButton.addEventListener('click', savePassenger);
 
     /*сортировки*/
-    function sortBy(field){
-        return (a,b)=> a[field] >b[field] ? 1:-1;
+    function sortBy(field) {
+        return (a, b) => a[field] > b[field] ? 1 : -1;
     }
 
     const sortByFlightNumberButton = document.getElementById("sortByFlightNumber");
@@ -530,7 +544,7 @@
     const sortByFlightDurationButton = document.getElementById("sortByFlightDuration");
     const sortByMaxNumberOfSeatsButton = document.getElementById("sortByMaxNumberOfSeats");
 
-    sortByFlightNumberButton.addEventListener('click',async function () {
+    sortByFlightNumberButton.addEventListener('click', async function () {
         const response = await fetch(`${baseURI}/flights`, {
             method: 'GET',
             headers: {
@@ -541,7 +555,7 @@
         flights.sort(sortBy('flightNumber'))
         fillTableFlights(flights);
     });
-    sortByDestinationButton.addEventListener('click',async function () {
+    sortByDestinationButton.addEventListener('click', async function () {
         const response = await fetch(`${baseURI}/flights`, {
             method: 'GET',
             headers: {
@@ -552,7 +566,7 @@
         flights.sort(sortBy('destination'))
         fillTableFlights(flights);
     });
-    sortByFlightDurationButton.addEventListener('click',async function () {
+    sortByFlightDurationButton.addEventListener('click', async function () {
         const response = await fetch(`${baseURI}/flights`, {
             method: 'GET',
             headers: {
@@ -563,7 +577,7 @@
         flights.sort(sortBy('estFlightDuration'))
         fillTableFlights(flights);
     });
-    sortByMaxNumberOfSeatsButton.addEventListener('click',async function () {
+    sortByMaxNumberOfSeatsButton.addEventListener('click', async function () {
         const response = await fetch(`${baseURI}/flights`, {
             method: 'GET',
             headers: {
@@ -579,17 +593,11 @@
     // поиски
 
     const usrFindNumber = document.getElementById('numberOfSeats');
-    const faindSubmit = document.getElementById('seatsFind');
+    const foundSubmit = document.getElementById('seatsFind');
     const newFlightTable = document.getElementById('Flights-table2');
     const usrFindPlace = document.getElementById('nameOfPlace');
-    const faindPlaceSubmit = document.getElementById('placeFind');
+    const foundPlaceSubmit = document.getElementById('placeFind');
 
-    function fillTableFlights2(flights) {
-        newFlightTable.innerHTML = '';
-        flights.forEach(flight => {
-            addFlight(flight);
-        });
-    }
     function addFlight2(flight) {
         const tr = document.createElement('tr');
         for (const prop in flight) {
@@ -604,7 +612,7 @@
         newFlightTable.append(tr);
     }
 
-    faindSubmit.addEventListener('click',async function(){
+    foundSubmit.addEventListener('click', async function () {
         newFlightTable.innerHTML = '';
         const response = await fetch(`${baseURI}/flights`, {
             method: 'GET',
@@ -615,12 +623,13 @@
         const flights = await response.json();
         let findNumber = usrFindNumber.value;
         flights.sort(flight => {
-            if(flight.maxNumSeats >=findNumber ){
+            if (flight.maxNumSeats >= findNumber) {
                 addFlight2(flight);
             }
         })
     });
-    faindPlaceSubmit.addEventListener('click',async function(){
+
+    foundPlaceSubmit.addEventListener('click', async function () {
         newFlightTable.innerHTML = '';
         const response = await fetch(`${baseURI}/flights`, {
             method: 'GET',
@@ -631,13 +640,13 @@
         const flights = await response.json();
         let findPlace = usrFindPlace.value;
         flights.sort(flight => {
-            if(flight.destination ==findPlace ){
+            if (flight.destination === findPlace) {
                 addFlight2(flight);
             }
         })
     });
     // удаление и апдэйт
-    passengersTable.addEventListener('click', async function(e){
+    passengersTable.addEventListener('click', async function (e) {
         if (e.target.nodeName === 'BUTTON' && e.target.classList.contains('delete')) {
             console.log('delete', e.target)
 

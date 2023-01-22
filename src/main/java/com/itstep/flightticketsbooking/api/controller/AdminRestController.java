@@ -52,12 +52,30 @@ public class AdminRestController {
         return ResponseEntity.badRequest()
                 .body(new ErrorResponse("User not found"));
     }
+
     @DeleteMapping("/flights/{id}")
     public ResponseEntity<?> deleteFlight(@PathVariable Long id) {
         Optional<Flight> optionalFlight = flightRepository.findById(id);
         if (optionalFlight.isPresent()) {
             flightRepository.delete(optionalFlight.get());
             return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.badRequest()
+                .body(new ErrorResponse("Flight not found"));
+    }
+
+    @PutMapping("/flights/{id}")
+    public ResponseEntity<?> updateFlight(@PathVariable Long id, @RequestBody Flight flight) {
+        Optional<Flight> optionalFlight = flightRepository.findById(id);
+        if (optionalFlight.isPresent()) {
+            Flight fl = optionalFlight.get();
+            fl.setFlightNumber(flight.getFlightNumber());
+            fl.setDepartureDate(flight.getDepartureDate());
+            fl.setOrigin(flight.getOrigin());
+            fl.setDestination(flight.getDestination());
+            fl.setEstFlightDuration(flight.getEstFlightDuration());
+            fl.setMaxNumSeats(flight.getMaxNumSeats());
+            return ResponseEntity.of(Optional.of(flightRepository.save(fl)));
         }
         return ResponseEntity.badRequest()
                 .body(new ErrorResponse("Flight not found"));

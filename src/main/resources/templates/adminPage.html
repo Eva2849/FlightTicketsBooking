@@ -301,27 +301,31 @@
             color: green;
             cursor: pointer;
         }
-        #findSeatsDiv,#findPlaceDiv {
+
+        #findSeatsDiv, #findPlaceDiv {
             margin-top: 27px;
             margin-left: 60px;
         }
 
-        #seatsFind,#placeFind {
+        #seatsFind, #placeFind {
             margin-left: 20px;
             width: 60px;
             background-color: rgb(99, 187, 52);
             border-radius: 8px;
         }
-        #flightHead2{
+
+        #flightHead2 {
             border: 1px solid;
             text-align: center;
             width: 100%;
             background-color: rgb(80, 169, 180);
         }
-        #h2ForFlights2{
+
+        #h2ForFlights2 {
             color: rgb(238, 231, 231);
         }
-        #flightHeadTable2{
+
+        #flightHeadTable2 {
             width: auto;
             height: 50px;
             border: 1px solid black;
@@ -409,7 +413,7 @@
     <table>
         <thead id="flightHeadTable2">
         <tr>
-            <th >ID</th>
+            <th>ID</th>
             <th>Flight number</th>
             <th>Departure date and time</th>
             <th>Origin</th>
@@ -651,7 +655,7 @@
             if (resp.status === 200) {
                 let flight = await resp.json();
                 console.log(flight);
-                addUser(flight)
+                addFlight(flight);
             } else {
                 alert('Error: ' + (await resp.text()));
             }
@@ -765,9 +769,8 @@
     });
 
     // удаление и апдэйт
-    // const trW = document.getElementById('Users-table');
 
-    usersTable.addEventListener('click',async function (e) {
+    usersTable.addEventListener('click', async function (e) {
         if (e.target.nodeName === 'BUTTON' && e.target.classList.contains('delete')) {
             console.log('delete', e.target)
 
@@ -797,7 +800,8 @@
             }
         }
     });
-    flightsTable.addEventListener('click', async function(e){
+
+    flightsTable.addEventListener('click', async function (e) {
         if (e.target.nodeName === 'BUTTON' && e.target.classList.contains('delete')) {
             console.log('delete', e.target)
 
@@ -827,20 +831,43 @@
             }
         }
     });
+
+    flightsTable.addEventListener('click', async function (e) {
+        if (e.target.nodeName === 'BUTTON' && e.target.classList.contains('update')) {
+            console.log('update', e.target)
+
+            const id = e.target.parentElement.parentElement.firstElementChild.innerHTML;
+            console.log(id)
+
+            const csrfHeaderName = csrfHeader.content;
+            const csrfTokenValue = csrfToken.content;
+
+            const response = await fetch(`${baseURI}/flights/${id}`, {
+                method: 'PUT',
+                headers: {
+                    [csrfHeaderName]: csrfTokenValue
+                },
+
+            });
+
+            console.log(response.status)
+            if (response.status === 200) {
+                let flight = await response.json();
+                console.log(flight);
+                addFlight(flight)
+            } else {
+                alert("Error")
+            }
+        }
+    });
     // поиски
 
     const usrFindNumber = document.getElementById('numberOfSeats');
-    const faindSubmit = document.getElementById('seatsFind');
+    const foundSubmit = document.getElementById('seatsFind');
     const newFlightTable = document.getElementById('Flights-table2');
     const usrFindPlace = document.getElementById('nameOfPlace');
-    const faindPlaceSubmit = document.getElementById('placeFind');
+    const foundPlaceSubmit = document.getElementById('placeFind');
 
-    function fillTableFlights2(flights) {
-        newFlightTable.innerHTML = '';
-        flights.forEach(flight => {
-            addFlight(flight);
-        });
-    }
     function addFlight2(flight) {
         const tr = document.createElement('tr');
         for (const prop in flight) {
@@ -855,7 +882,7 @@
         newFlightTable.append(tr);
     }
 
-    faindSubmit.addEventListener('click',async function(){
+    foundSubmit.addEventListener('click', async function () {
         newFlightTable.innerHTML = '';
         const response = await fetch(`${baseURI}/flights`, {
             method: 'GET',
@@ -866,12 +893,12 @@
         const flights = await response.json();
         let findNumber = usrFindNumber.value;
         flights.sort(flight => {
-            if(flight.maxNumSeats >=findNumber ){
+            if (flight.maxNumSeats >= findNumber) {
                 addFlight2(flight);
             }
         })
     });
-    faindPlaceSubmit.addEventListener('click',async function(){
+    foundPlaceSubmit.addEventListener('click', async function () {
         newFlightTable.innerHTML = '';
         const response = await fetch(`${baseURI}/flights`, {
             method: 'GET',
@@ -882,7 +909,7 @@
         const flights = await response.json();
         let findPlace = usrFindPlace.value;
         flights.sort(flight => {
-            if(flight.destination ==findPlace ){
+            if (flight.destination === findPlace) {
                 addFlight2(flight);
             }
         })
