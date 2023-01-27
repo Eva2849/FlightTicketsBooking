@@ -3,94 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <title>UpdateFlight</title>
-  <meta name="csrf-token" id="csrf-token" th:content="${_csrf.token}"/>
-  <meta name="csrf-header" id="csrf-header" th:content="${_csrf.headerName}"/>
-  <style>
+    <meta name="csrf-token" id="csrf-token" th:content="${_csrf.token}"/>
+    <meta name="csrf-header" id="csrf-header" th:content="${_csrf.headerName}"/>
+    <meta name="flightId" id="flightId" th:content="${flightId}" />
+    <style>
 
-  </style>
+    </style>
 </head>
 <body>
-<div id="headFlightForm"><h1 id="h1FlightForm">Update flight:</h1></div>
+<div id="headFlightForm">
+    <h1 id="h1FlightForm">Update flight:</h1>
+</div>
 <div class="addFlightForm">
-  <div class="toFlightNumber">
-    <label for="flightNumber">Flight number: </label>
-    <input type="text" id="flightNumber" name="flightNumber" required th:value="${flight.flightNumber}">
-  </div>
-  <div class="toDepartureDate">
-    <label for="departureDate">Departure date: </label>
-    <input type="datetime-local" id="departureDate" name="departureDate" required>
-  </div>
-  <div class="toOrigin">
-    <label for="origin">Origin: </label>
-    <input type="text" id="origin" name="origin" required>
-  </div>
-  <div class="toDestination">
-    <label for="destination">Destination: </label>
-    <input type="text" id="destination" name="destination" required>
-  </div>
-  <div class="toEstFlightDuration">
-    <label for="estFlightDuration">Flight duration: </label>
-    <input type="number" id="estFlightDuration" name="estFlightDuration" required>
-  </div>
-  <div class="toMaxNumSeats">
-    <label for="maxNumSeats">Capacity: </label>
-    <input type="number" id="maxNumSeats" name="maxNumSeats">
-  </div>
-  <div class="toSubmitFlight">
-    <input type="submit" id="saveFlight" value="SAVE FLIGHT"/>
-  </div>
+
+    <div class="toFlightNumber">
+        <label for="flightNumber">Flight number: </label>
+        <input type="text" id="flightNumber" name="flightNumber" required th:value="${flight.flightNumber}">
+    </div>
+    <div class="toDepartureDate">
+        <label for="departureDate">Departure date: </label>
+        <input type="datetime-local" id="departureDate" name="departureDate" required th:value="${flight.departureDate}">
+    </div>
+    <div class="toOrigin">
+        <label for="origin">Origin: </label>
+        <input type="text" id="origin" name="origin" required>
+    </div>
+    <div class="toDestination">
+        <label for="destination">Destination: </label>
+        <input type="text" id="destination" name="destination" required>
+    </div>
+    <div class="toEstFlightDuration">
+        <label for="estFlightDuration">Flight duration: </label>
+        <input type="text" id="estFlightDuration" name="estFlightDuration" required th:value="${flight.estFlightDuration}">
+    </div>
+    <div class="toMaxNumSeats">
+        <label for="maxNumSeats">Capacity: </label>
+        <input type="number" id="maxNumSeats" name="maxNumSeats">
+    </div>
+    <div class="toSubmitFlight">
+        <input type="submit" id="saveFlight" value="SAVE FLIGHT"/>
+    </div>
 </div>
 
 <script>
-  const saveFlightButton = document.getElementById('saveFlight');
-  const baseURI = 'http://localhost:8080/updateFlight';
+    const saveFlightButton = document.getElementById('saveFlight');
+    const flighiIdMeta = document.getElementById("flightId");
+    const flightId = flighiIdMeta.content;
+    const baseURI = `http://localhost:8080/updateFlight/${flightId}`;
 
-  async function saveFlight() {
-    console.log("saveFlight")
-    const flightNumberInput = document.getElementById('flightNumber');
-    const departureDateInput = document.getElementById('departureDate');
-    const originInput = document.getElementById('origin');
-    const destinationInput = document.getElementById('destination');
-    const estFlightDurationInput = document.getElementById('estFlightDuration');
-    const maxNumSeatsInput = document.getElementById('maxNumSeats');
+    async function saveFlight() {
+        console.log("saveFlight")
+        const flightNumberInput = document.getElementById('flightNumber');
+        const departureDateInput = document.getElementById('departureDate');
+        const originInput = document.getElementById('origin');
+        const destinationInput = document.getElementById('destination');
+        const estFlightDurationInput = document.getElementById('estFlightDuration');
+        const maxNumSeatsInput = document.getElementById('maxNumSeats');
 
-    const flight = {
-      flightNumber: flightNumberInput.value,
-      departureDate: departureDateInput.value,
-      origin: originInput.value,
-      destination: destinationInput.value,
-      estFlightDuration: estFlightDurationInput.value,
-      maxNumSeats: maxNumSeatsInput.value,
-    };
-    console.log(flight);
-    const csrfHeaderName = csrfHeader.content;
-    const csrfTokenValue = csrfToken.content;
-    const response = await fetch(`${baseURI}/flights`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        [csrfHeaderName]: csrfTokenValue
-      },
-      body: JSON.stringify(flight)
-    });
-    console.log(response.status);
-    if (response.status === 201) {
-      const loc = response.headers.get('location');
-      const resp = await fetch(`http://localhost:8080${loc}`)
-      if (resp.status === 200) {
-        let flight = await resp.json();
+        const flight = {
+            flightNumber: flightNumberInput.value,
+            departureDate: departureDateInput.value,
+            origin: originInput.value,
+            destination: destinationInput.value,
+            estFlightDuration: estFlightDurationInput.value,
+            maxNumSeats: maxNumSeatsInput.value,
+        };
         console.log(flight);
-        addFlight(flight);
-      } else {
-        alert('Error: ' + (await resp.text()));
-      }
-    } else {
-      alert('Error: ' + response.status);
-      console.error(await response.json());
+        const csrfHeaderName = csrfHeader.content;
+        const csrfTokenValue = csrfToken.content;
+        const response = await fetch(`${baseURI}/flights`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                [csrfHeaderName]: csrfTokenValue
+            },
+            body: JSON.stringify(flight)
+        });
+        console.log(response.status);
+        if (response.status === 201) {
+            const loc = response.headers.get('location');
+            const resp = await fetch(`http://localhost:8080${loc}`)
+            if (resp.status === 200) {
+                let flight = await resp.json();
+                console.log(flight);
+                addFlight(flight);
+            } else {
+                alert('Error: ' + (await resp.text()));
+            }
+        } else {
+            alert('Error: ' + response.status);
+            console.error(await response.json());
+        }
     }
-  }
 
-  saveFlightButton.addEventListener('click',saveFlight);
+    saveFlightButton.addEventListener('click', saveFlight);
 </script>
 
 </body>
