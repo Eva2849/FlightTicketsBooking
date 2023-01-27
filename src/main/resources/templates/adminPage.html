@@ -642,13 +642,6 @@
             body: JSON.stringify(flight)
         });
         console.log(response.status);
-        // if (response.status === 201) {
-        //     const loc = response.headers.get('location');
-        //     const resp = await fetch(`http://localhost:8080${loc}`)
-        //     addFlight(await resp.json())
-        // } else {
-        //     alert('Error: ' + response.status);
-        // }
         if (response.status === 201) {
             const loc = response.headers.get('location');
             const resp = await fetch(`http://localhost:8080${loc}`)
@@ -839,25 +832,25 @@
             const id = e.target.parentElement.parentElement.firstElementChild.innerHTML;
             console.log(id)
 
-            const csrfHeaderName = csrfHeader.content;
-            const csrfTokenValue = csrfToken.content;
-
-            const response = await fetch(`${baseURI}/flights/${id}`, {
-                method: 'PUT',
-                headers: {
-                    [csrfHeaderName]: csrfTokenValue
-                },
-
-            });
-
-            console.log(response.status)
-            if (response.status === 200) {
-                let flight = await response.json();
-                console.log(flight);
-                addFlight(flight)
-            } else {
-                alert("Error")
-            }
+            // const csrfHeaderName = csrfHeader.content;
+            // const csrfTokenValue = csrfToken.content;
+            //
+            // const response = await fetch(`${baseURI}/flights/${id}`, {
+            //     method: 'PUT',
+            //     headers: {
+            //         [csrfHeaderName]: csrfTokenValue
+            //     },
+            //
+            // });
+            //
+            // console.log(response.status)
+            // if (response.status === 200) {
+            //     let flight = await response.json();
+            //     console.log(flight);
+            //     addFlight(flight)
+            // } else {
+            //     alert("Error")
+            // }
         }
     });
     // поиски
