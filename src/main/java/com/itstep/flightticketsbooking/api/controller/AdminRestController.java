@@ -9,6 +9,7 @@ import com.itstep.flightticketsbooking.repository.FlightRepository;
 import com.itstep.flightticketsbooking.repository.RoleRepository;
 import com.itstep.flightticketsbooking.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -112,6 +113,8 @@ public class AdminRestController {
         }
         return ResponseEntity.badRequest().body("Flight not found");
     }
+
+    final ApplicationContext applicationContext;
 
     @PostMapping("/flights")
     public ResponseEntity<?> createFlight(@RequestBody @Validated FlightDto flightDto, BindingResult bindingResult) {
