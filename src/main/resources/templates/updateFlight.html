@@ -7,10 +7,59 @@
     <meta name="csrf-header" id="csrf-header" th:content="${_csrf.headerName}"/>
     <meta name="flightId" id="flightId" th:content="${flightId}" />
     <style>
+        .totalDiv{
+            text-align: center;
+            border: 1px solid red;
+            width: 700px;
+            margin-left: 31%;
+        }
+        .addFlightForm{
+            width: 700px;
+            height: 600px;
+            border: 1px solid;
+            /*text-align: center;*/
+            /*margin-left: 30%;*/
+        }
+        #headFlightForm{
+            width: 700px;
+            text-align: center;
+            border: 1px solid;
+        }
+        .toFlightNumber{
+            margin-top: ;
+
+        }
+        .toDepartureDate{
+            margin-left: 26px;
+        }
+        .toOrigin{
+            margin-left: 49px;
+
+        }
+        .toDestination{
+            margin-left: 20px;
+
+        }
+        .toEstFlightDuration{
+            margin-left: 0px;
+
+        }
+        .toMaxNumSeats{
+            margin-left: 35px;
+
+        }
+        #saveFlight {
+            width: 100px;
+            height: 50px;
+            cursor: pointer;
+            background-color: rgb(99, 187, 52);
+            border-radius: 10px;
+        }
 
     </style>
 </head>
 <body>
+<div class="totalDiv">
 <div id="headFlightForm">
     <h1 id="h1FlightForm">Update flight:</h1>
 </div>
@@ -26,11 +75,11 @@
     </div>
     <div class="toOrigin">
         <label for="origin">Origin: </label>
-        <input type="text" id="origin" name="origin" required>
+        <input type="text" id="origin" name="origin" required th:value="${flight.origin}">
     </div>
     <div class="toDestination">
         <label for="destination">Destination: </label>
-        <input type="text" id="destination" name="destination" required>
+        <input type="text" id="destination" name="destination" required th:value="${flight.destination}">
     </div>
     <div class="toEstFlightDuration">
         <label for="estFlightDuration">Flight duration: </label>
@@ -38,11 +87,12 @@
     </div>
     <div class="toMaxNumSeats">
         <label for="maxNumSeats">Capacity: </label>
-        <input type="number" id="maxNumSeats" name="maxNumSeats">
+        <input type="number" id="maxNumSeats" name="maxNumSeats" required th:value="${flight.maxNumSeats}">
     </div>
     <div class="toSubmitFlight">
         <input type="submit" id="saveFlight" value="SAVE FLIGHT"/>
     </div>
+</div>
 </div>
 
 <script>

@@ -28,7 +28,7 @@ public class WebSecurityConfig {
         return httpSecurity
                 .authorizeHttpRequests(authorize -> authorize
                         .antMatchers("/", "/h2-console/flights", "/registration").permitAll()
-                        .antMatchers("/adminPage/**", "/api/v1/admin/**","/updateFlight/**").hasRole("ADMIN")
+                        .antMatchers("/adminPage/**", "/api/v1/admin/**","/updateFlight/**","/updateUser/**").hasRole("ADMIN")
                         .antMatchers("/userPage/**", "/api/v1/user/**").hasRole("USER")
                         .anyRequest().denyAll())
                 .formLogin().successHandler((request, response, authentication) -> {

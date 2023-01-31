@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>UpdateUser</title>
+    <meta name="csrf-token" id="csrf-token" th:content="${_csrf.token}"/>
+    <meta name="csrf-header" id="csrf-header" th:content="${_csrf.headerName}"/>
+    <meta name="userId" id="flightId" th:content="${userId}" />
+    <style>
+        .addUserForm{
+
+        }
+
+    </style>
+</head>
+<body>
+<div class="addUserForm">
+    <div class="toLogin">
+        <label for="login">Login: </label>
+        <input type="text" id="login" name="login" required th:value="${user.username}">
+    </div>
+    <div class="toPassword">
+        <label for="password">Password: </label>
+        <input type="password" id="password" name="password" required th:value="${user.password}">
+    </div>
+    <div class="toFirstName">
+        <label for="firstName">First name: </label>
+        <input type="text" id="firstName" name="firstName" required th:value="${user.firstName}">
+    </div>
+    <div class="toLastName">
+        <label for="lastName">Last name: </label>
+        <input type="text" id="lastName" name="lastName" required th:value="${user.lastName}">
+    </div>
+    <div class="toBirthDate">
+        <label for="birthDate">Date of birth: </label>
+        <input type="date" id="birthDate" name="birthDate" required th:value="${user.birthDate}">
+    </div>
+    <div class="toGender">
+        <label for="gender">Gender: </label>
+        <select id="gender" name="gender">
+            <option value="MALE">Male</option>
+            <option value="FEMALE">Female</option>
+            <option value="UNKNOWN">Unknown</option>
+        </select>
+    </div>
+    <div class="toSubmitUser">
+        <input type="submit" id="userSave" value="SAVE USER"/>
+    </div>
+</div>
+
+</body>
+</html>
