@@ -6,8 +6,170 @@
   <meta name="csrf-token" id="csrf-token" th:content="${_csrf.token}"/>
   <meta name="csrf-header" id="csrf-header" th:content="${_csrf.headerName}"/>
   <meta name="passengerId" id="passengerId" th:content="${passengerId}" />
+  <style>
+    .totalDiv {
+      text-align: center;
+      border: 1px solid red;
+      border-radius: 10px;
+      width: 700px;
+      margin-left: 31%;
+    }
+    #forAddPassengers{
+      width: 700px;
+      height: 600px;
+    }
+    #headPassengerForm{
+      width: 700px;
+      text-align: center;
+      border: 1px solid #F38554FF;
+      border-radius: 10px;
+      background-color: #F38554FF;
+    }
+    #h1PassengerForm{
+      color: darkcyan;
+    }
+    #forName{
+      margin-top: 30px;
+      margin-bottom: 30px;
+    }
+    #forLastName{
+      margin-top: 30px;
+      margin-bottom: 30px;
+    }
+    #forPasportData{
+      margin-left: 15px;
+      margin-bottom: 30px;
+    }
+    #forBirthDate{
+      margin-right: 43px;
+      margin-bottom: 30px;
+    }
+    #forGender{
+      margin-right: 30px;
+      margin-bottom: 30px;
+    }
+    #forFlightNumber{
+      margin-right: 30px;
+      margin-bottom: 30px;
+    }
+    #passengerSave{
+      width: 180px;
+      height: 50px;
+      cursor: pointer;
+      background-color: rgb(99, 187, 52);
+      border-radius: 10px;
+      margin-top: 30px;
+      margin-bottom: 30px;
+    }
+    label {
+      color: indianred;
+      font-size: 130%;
+    }
+
+    input {
+      font-size: 120%;
+      background-color: cornsilk;
+      box-shadow: 10px 10px 10px 10px rgb(151, 187, 184);
+    }
+
+    select {
+      font-size: 120%;
+    }
+  </style>
 </head>
-<body>
+<body style="font-family: sans-serif;">
+<div class="totalDiv">
+<div id="headPassengerForm">
+  <h1 id="h1PassengerForm">Update flight:</h1>
+</div>
+<div id="forAddPassengers">
+  <div style="margin-top: 10px; margin-bottom: 10px;">
+    <div id="forName">
+      <label for="firstName">First name: </label>
+      <input type="text" id="firstName" name="firstName">
+    </div>
+    <div id="forLastName">
+      <label for="lastName">Last name: </label>
+      <input type="text" id="lastName" name="lastName">
+    </div>
+    <div id="forPasportData">
+      <label for="passportData">Passport: </label>
+      <input type="text" id="passportData" name="passportData">
+    </div>
+    <div id="forBirthDate">
+      <label for="birthDate">Date of birth: </label>
+      <input type="date" id="birthDate" name="birthDate">
+    </div>
+    <div id="forGender">
+      <label for="gender">Gender: </label>
+      <select id="gender" name="gender">
+        <option value="MALE">Male</option>
+        <option value="FEMALE">Female</option>
+        <option value="UNKNOWN">Unknown</option>
+      </select>
+    </div>
+    <div id="forFlightNumber">
+      <label for="flightNumber">Flight number: </label>
+      <input type="text" id="flightNumber" name="flightNumber">
+    </div>
+    <div>
+      <input type="submit" id="passengerSave" value="SAVE PASSENGER"/>
+    </div>
+  </div>
+</div>
+</div>
+<script>
+  const savePassengerButton = document.getElementById('passengerSave');
+  const passengerMeta = document.getElementById('passengerId');
+  const passengerId = passengerMeta.content;
+  const baseURI = `http://localhost:8080/updatePassenger/${passengerId}`;
+
+  async function savePassenger() {
+    const firstNameInput = document.getElementById('firstName');
+    const lastNameInput = document.getElementById('lastName');
+    const passportDataInput = document.getElementById('passportData');
+    const birthDateInput = document.getElementById('birthDate');
+    const genderInput = document.getElementById('gender');
+
+    const passenger = {
+      firstName: firstNameInput.value,
+      lastName: lastNameInput.value,
+      passportData: passportDataInput.value,
+      birthDate: birthDateInput.value,
+      gender: genderInput.value
+    };
+    console.log(passenger);
+    const csrfHeaderName = csrfHeader.content;
+    const csrfTokenValue = csrfToken.content;
+
+    const response = await fetch(`${baseURI}/passengers`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        [csrfHeaderName]: csrfTokenValue
+      },
+      body: JSON.stringify(passenger)
+    });
+
+    console.log(response.status);
+
+    if (response.status === 201) {
+      const loc = response.headers.get('location');
+      const resp = await fetch(`http://localhost:8080${loc}`)
+      if (resp.status === 200) {
+        let passenger = await resp.json();
+        console.log(passenger);
+        addPassenger(passenger)
+      } else {
+        alert('Error: ' + (await resp.text()));
+      }
+    } else {
+      alert('Error: ' + response.status);
+      console.error(await response.json());
+    }
+  }
+  savePassengerButton.addEventListener('click',savePassenger);
+</script>
 
 </body>
 </html>

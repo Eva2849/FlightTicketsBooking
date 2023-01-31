@@ -441,7 +441,7 @@
         deleteButton.innerText = "DELETE";
         deleteButton.className = "delete";
         const update = document.createElement("button");
-        update.innerText = "UPDATE";
+        update.innerHTML = `<a href='/updatePassenger/${passenger.id}'>UPDATE</a>`;
         update.className = "update";
         td.append(deleteButton, update);
         tr.append(td);
