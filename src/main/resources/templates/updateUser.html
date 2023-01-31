@@ -5,48 +5,187 @@
     <title>UpdateUser</title>
     <meta name="csrf-token" id="csrf-token" th:content="${_csrf.token}"/>
     <meta name="csrf-header" id="csrf-header" th:content="${_csrf.headerName}"/>
-    <meta name="userId" id="flightId" th:content="${userId}" />
+    <meta name="userId" id="userId" th:content="${userId}"/>
     <style>
-        .addUserForm{
+        .totalDiv {
+            text-align: center;
+            border: 1px solid red;
+            border-radius: 10px;
+            width: 700px;
+            margin-left: 31%;
+        }
 
+        .addUserForm {
+            width: 700px;
+            height: 600px;
+        }
+
+        #headUserForm {
+            width: 700px;
+            text-align: center;
+            border: 1px solid #F38554FF;
+            border-radius: 10px;
+            background-color: #F38554FF;
+        }
+
+        #h1UserForm {
+            color: darkcyan;
+        }
+
+        .toLogin {
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+
+        .toPassword {
+            margin-right: 43px;
+            margin-bottom: 30px;
+        }
+
+        .toFirstName {
+            margin-right: 50px;
+            margin-bottom: 30px;
+
+        }
+
+        .toLastName {
+            margin-right: 50px;
+            margin-bottom: 30px;
+
+        }
+
+        .toBirthDate {
+            margin-right: 70px;
+            margin-bottom: 30px;
+
+        }
+
+        .toGender {
+            margin-right: 60px;
+            margin-bottom: 30px;
+
+        }
+
+        #userSave {
+            width: 150px;
+            height: 50px;
+            cursor: pointer;
+            background-color: rgb(99, 187, 52);
+            border-radius: 10px;
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+
+        label {
+            color: indianred;
+            font-size: 130%;
+        }
+
+        input {
+            font-size: 120%;
+            background-color: cornsilk;
+            box-shadow: 10px 10px 10px 10px rgb(151, 187, 184);
+        }
+
+        select {
+            font-size: 120%;
         }
 
     </style>
 </head>
-<body>
-<div class="addUserForm">
-    <div class="toLogin">
-        <label for="login">Login: </label>
-        <input type="text" id="login" name="login" required th:value="${user.username}">
+<body style="font-family: sans-serif;">
+<div class="totalDiv">
+    <div id="headUserForm">
+        <h1 id="h1UserForm">Update flight:</h1>
     </div>
-    <div class="toPassword">
-        <label for="password">Password: </label>
-        <input type="password" id="password" name="password" required th:value="${user.password}">
-    </div>
-    <div class="toFirstName">
-        <label for="firstName">First name: </label>
-        <input type="text" id="firstName" name="firstName" required th:value="${user.firstName}">
-    </div>
-    <div class="toLastName">
-        <label for="lastName">Last name: </label>
-        <input type="text" id="lastName" name="lastName" required th:value="${user.lastName}">
-    </div>
-    <div class="toBirthDate">
-        <label for="birthDate">Date of birth: </label>
-        <input type="date" id="birthDate" name="birthDate" required th:value="${user.birthDate}">
-    </div>
-    <div class="toGender">
-        <label for="gender">Gender: </label>
-        <select id="gender" name="gender">
-            <option value="MALE">Male</option>
-            <option value="FEMALE">Female</option>
-            <option value="UNKNOWN">Unknown</option>
-        </select>
-    </div>
-    <div class="toSubmitUser">
-        <input type="submit" id="userSave" value="SAVE USER"/>
+    <div class="addUserForm">
+        <div class="toLogin">
+            <label for="login">Login: </label>
+            <input type="text" id="login" name="login" required th:value="${user.username}">
+        </div>
+        <div class="toPassword">
+            <label for="password">Password: </label>
+            <input type="password" id="password" name="password" required th:value="${user.password}">
+        </div>
+        <div class="toFirstName">
+            <label for="firstName">First name: </label>
+            <input type="text" id="firstName" name="firstName" required th:value="${user.firstName}">
+        </div>
+        <div class="toLastName">
+            <label for="lastName">Last name: </label>
+            <input type="text" id="lastName" name="lastName" required th:value="${user.lastName}">
+        </div>
+        <div class="toBirthDate">
+            <label for="birthDate">Date of birth: </label>
+            <input type="date" id="birthDate" name="birthDate" required th:value="${user.birthDate}">
+        </div>
+        <div class="toGender">
+            <label for="gender">Gender: </label>
+            <select id="gender" name="gender">
+                <option value="MALE">Male</option>
+                <option value="FEMALE">Female</option>
+                <option value="UNKNOWN">Unknown</option>
+            </select>
+        </div>
+        <div class="toSubmitUser">
+            <input type="submit" id="userSave" value="SAVE USER"/>
+        </div>
     </div>
 </div>
+<script>
+    const saveUserButton = document.getElementById('userSave');
+    const userMeta = document.getElementById('userId');
+    const userId= userMeta.content;
+    const baseURI = `http://localhost:8080/updateUser/${userId}`;
+
+    async function saveUser() {
+        const usernameInput = document.getElementById('login');
+        const passwordInput = document.getElementById('password');
+        const firstNameInput = document.getElementById('firstName');
+        const lastNameInput = document.getElementById('lastName');
+        const birthDateInput = document.getElementById('birthDate');
+        const genderInput = document.getElementById('gender');
+
+        const user = {
+            username: usernameInput.value,
+            password: passwordInput.value,
+            firstName: firstNameInput.value,
+            lastName: lastNameInput.value,
+            birthDate: birthDateInput.value,
+            gender: genderInput.value
+        };
+
+        console.log(user);
+        const csrfHeaderName = csrfHeader.content;
+        const csrfTokenValue = csrfToken.content;
+        const response = await fetch(`${baseURI}/users`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                [csrfHeaderName]: csrfTokenValue
+            },
+            body: JSON.stringify(user)
+        });
+
+        if (response.status === 201) {
+            const loc = response.headers.get('location');
+            const resp = await fetch(`http://localhost:8080${loc}`)
+            if (resp.status === 200) {
+                let user = await resp.json();
+                console.log(user);
+                addUser(user)
+            } else {
+                alert('Error: ' + (await resp.text()));
+            }
+        } else {
+            alert('Error: ' + response.status);
+            console.error(await response.json());
+        }
+    }
+    saveUserButton.addEventListener('click',saveUser);
+
+
+</script>
 
 </body>
 </html>

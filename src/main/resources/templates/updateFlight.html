@@ -10,55 +10,76 @@
         .totalDiv{
             text-align: center;
             border: 1px solid red;
+            border-radius: 10px;
             width: 700px;
             margin-left: 31%;
         }
         .addFlightForm{
             width: 700px;
             height: 600px;
-            border: 1px solid;
-            /*text-align: center;*/
-            /*margin-left: 30%;*/
+            /*border: 1px solid;*/
         }
         #headFlightForm{
             width: 700px;
             text-align: center;
-            border: 1px solid;
+            border: 1px solid #F38554FF;
+            border-radius: 10px;
+            background-color: #F38554FF;
+        }
+        #h1FlightForm{
+            color: darkcyan;
         }
         .toFlightNumber{
-            margin-top: ;
+            margin-top: 30px;
+            margin-bottom: 30px;
 
         }
         .toDepartureDate{
             margin-left: 26px;
+            margin-bottom: 30px;
         }
         .toOrigin{
             margin-left: 49px;
+            margin-bottom: 30px;
 
         }
         .toDestination{
             margin-left: 20px;
+            margin-bottom: 30px;
 
         }
         .toEstFlightDuration{
             margin-left: 0px;
+            margin-bottom: 30px;
 
         }
         .toMaxNumSeats{
             margin-left: 35px;
+            margin-bottom: 30px;
 
         }
         #saveFlight {
-            width: 100px;
+            width: 150px;
             height: 50px;
             cursor: pointer;
             background-color: rgb(99, 187, 52);
             border-radius: 10px;
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+        label{
+            color: indianred;
+            font-size: 130%;
+        }
+        input{
+            font-size: 120%;
+            background-color: cornsilk;
+            box-shadow: 10px 10px 10px 10px rgb(151, 187, 184);
         }
 
     </style>
 </head>
-<body>
+<body style="font-family: sans-serif;">
 <div class="totalDiv">
 <div id="headFlightForm">
     <h1 id="h1FlightForm">Update flight:</h1>
@@ -97,8 +118,8 @@
 
 <script>
     const saveFlightButton = document.getElementById('saveFlight');
-    const flighiIdMeta = document.getElementById("flightId");
-    const flightId = flighiIdMeta.content;
+    const flightIdMeta = document.getElementById("flightId");
+    const flightId = flightIdMeta.content;
     const baseURI = `http://localhost:8080/updateFlight/${flightId}`;
 
     async function saveFlight() {
