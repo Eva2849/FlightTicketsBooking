@@ -532,11 +532,7 @@
         const tr = document.createElement('tr');
         for (const prop in flight) {
             const td = document.createElement('td');
-            // if (prop === 'passenger') {
-            //     td.append(document.createTextNode(flight[prop].name));
-            // } else {
             td.append(document.createTextNode(flight[prop]));
-            // }
             tr.append(td);
         }
         const td = document.createElement('td');
@@ -813,7 +809,6 @@
                 headers: {
                     [csrfHeaderName]: csrfTokenValue
                 },
-
             });
 
             console.log(response.status)
@@ -832,25 +827,25 @@
             const id = e.target.parentElement.parentElement.firstElementChild.innerHTML;
             console.log(id)
 
-            // const csrfHeaderName = csrfHeader.content;
-            // const csrfTokenValue = csrfToken.content;
-            //
-            // const response = await fetch(`${baseURI}/flights/${id}`, {
-            //     method: 'PUT',
-            //     headers: {
-            //         [csrfHeaderName]: csrfTokenValue
-            //     },
-            //
-            // });
-            //
-            // console.log(response.status)
-            // if (response.status === 200) {
-            //     let flight = await response.json();
-            //     console.log(flight);
-            //     addFlight(flight)
-            // } else {
-            //     alert("Error")
-            // }
+            const csrfHeaderName = csrfHeader.content;
+            const csrfTokenValue = csrfToken.content;
+
+            const response = await fetch(`${baseURI}/flights/${id}`, {
+                method: 'PUT',
+                headers: {
+                    [csrfHeaderName]: csrfTokenValue
+                },
+
+            });
+
+            console.log(response.status)
+            if (response.status === 200) {
+                let flight = await response.json();
+                console.log(flight);
+                addFlight(flight)
+            } else {
+                alert("Error")
+            }
         }
     });
     // поиски

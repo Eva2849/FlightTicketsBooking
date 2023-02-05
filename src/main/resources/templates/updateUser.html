@@ -135,7 +135,7 @@
 <script>
     const saveUserButton = document.getElementById('userSave');
     const userMeta = document.getElementById('userId');
-    const userId= userMeta.content;
+    const userId = userMeta.content;
     const baseURI = `http://localhost:8080/updateUser/${userId}`;
 
     async function saveUser() {
@@ -182,7 +182,8 @@
             console.error(await response.json());
         }
     }
-    saveUserButton.addEventListener('click',saveUser);
+
+    saveUserButton.addEventListener('click', saveUser);
 
 
 </script>

@@ -38,24 +38,26 @@ public class UpdateFlightController {
         return ResponseEntity.badRequest().body("Flight not found");
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/flights/{id}")
     @ResponseBody
     public ResponseEntity<?> updateFlight(@PathVariable Long id, @RequestBody @Validated FlightDto flightDto, BindingResult bindingResult) {
         if(bindingResult.hasErrors()) {
             return ResponseEntity.badRequest().body(new ErrorResponse("Error validation: " + bindingResult));
         }
 
-        Flight flight = flightDto.toEntityFlight();
-
         Optional<Flight> optionalFlight = flightRepository.findById(id);
+
         if (optionalFlight.isPresent()) {
             Flight fl = optionalFlight.get();
+            Flight flight = flightDto.toEntityFlight();
+
             fl.setFlightNumber(flight.getFlightNumber());
             fl.setDepartureDate(flight.getDepartureDate());
             fl.setOrigin(flight.getOrigin());
             fl.setDestination(flight.getDestination());
             fl.setEstFlightDuration(flight.getEstFlightDuration());
             fl.setMaxNumSeats(flight.getMaxNumSeats());
+
             return ResponseEntity.of(Optional.of(flightRepository.save(fl)));
         }
         return ResponseEntity.badRequest()

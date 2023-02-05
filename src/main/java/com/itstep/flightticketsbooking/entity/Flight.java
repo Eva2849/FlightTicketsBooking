@@ -2,16 +2,21 @@ package com.itstep.flightticketsbooking.entity;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Data
+@ToString(exclude = "passengers")
+@EqualsAndHashCode(exclude = "passengers")
 @Table(name = "Flights")
 public class Flight {
     @Id
@@ -41,4 +46,12 @@ public class Flight {
     @NonNull
     @Column(name = "maxNumSeats")
     private int maxNumSeats;
+
+    @OneToMany
+    @JsonIgnore
+    private Set<Passenger> passengers = new HashSet<>();
+
+    public void addPassenger(Passenger passenger) {
+        passengers.add(passenger);
+    }
 }

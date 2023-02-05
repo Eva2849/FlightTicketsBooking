@@ -7,6 +7,7 @@ import com.itstep.flightticketsbooking.entity.Passenger;
 import com.itstep.flightticketsbooking.repository.FlightRepository;
 import com.itstep.flightticketsbooking.repository.PassengerRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Example;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -42,7 +43,10 @@ public class UserRestController {
     @PostMapping("/passengers")
     public ResponseEntity<?> createPassenger(@RequestBody @Validated PassengerDto passengerDto, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
-            Passenger passenger = passengerDto.toEntity();
+//            Flight example = new Flight();
+//            example.setFlightNumber(passengerDto.getFlightNumber());
+//            Flight flight = flightRepository.findOne(Example.of(example)).orElseThrow();
+            Passenger passenger = passengerDto.toEntity(flightRepository.findByFlightNumber(passengerDto.getFlightNumber()));
             try {
                 passenger = passengerRepository.save(passenger);
             } catch (Exception e) {

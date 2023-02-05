@@ -42,5 +42,5 @@ public class Passenger {
 
 
     @ManyToOne
-    private User user;
+    private Flight flight;
 }

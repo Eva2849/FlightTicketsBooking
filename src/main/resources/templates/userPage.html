@@ -169,7 +169,7 @@
             margin-right: 47px;
         }
 
-        #forPasportData {
+        #forPassportData {
             float: left;
             margin-right: 35px;
             margin-top: 27px;
@@ -433,7 +433,11 @@
         const tr = document.createElement('tr');
         for (const prop in passenger) {
             const td = document.createElement('td');
-            td.append(document.createTextNode(passenger[prop]));
+            if (prop === 'flight') {
+                td.append(document.createTextNode(passenger[prop]['flightNumber']));
+            } else {
+                td.append(document.createTextNode(passenger[prop]));
+            }
             tr.append(td);
         }
         const td = document.createElement('td');
@@ -493,13 +497,15 @@
         const passportDataInput = document.getElementById('passportData');
         const birthDateInput = document.getElementById('birthDate');
         const genderInput = document.getElementById('gender');
+        const flightNumberInput = document.getElementById('flightNumber');
 
         const passenger = {
             firstName: firstNameInput.value,
             lastName: lastNameInput.value,
             passportData: passportDataInput.value,
             birthDate: birthDateInput.value,
-            gender: genderInput.value
+            gender: genderInput.value,
+            flightNumber: flightNumberInput.value
         };
         console.log(passenger);
         const csrfHeaderName = csrfHeader.content;

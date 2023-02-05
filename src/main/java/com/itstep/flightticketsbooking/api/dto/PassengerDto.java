@@ -1,5 +1,6 @@
 package com.itstep.flightticketsbooking.api.dto;
 
+import com.itstep.flightticketsbooking.entity.Flight;
 import com.itstep.flightticketsbooking.entity.Gender;
 import com.itstep.flightticketsbooking.entity.Passenger;
 import lombok.Data;
@@ -22,8 +23,12 @@ public class PassengerDto {
     LocalDate birthDate;
     @NotNull
     Gender gender;
+    @NotNull
+    String flightNumber;
 
-    public Passenger toEntity() {
-        return new Passenger(firstName, lastName, passportData, birthDate, gender);
+    public Passenger toEntity(Flight flight) {
+        Passenger passenger = new Passenger(firstName, lastName, passportData, birthDate, gender);
+        passenger.setFlight(flight);
+        return passenger;
     }
 }
