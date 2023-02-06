@@ -36,17 +36,19 @@ public class UpdateUserController {
         return ResponseEntity.badRequest()
                 .body(new ErrorResponse("User not found"));
     }
-    @PutMapping("/{id}")
+    @PutMapping("/users/{id}")
     @ResponseBody
     public ResponseEntity<?> updateUser(@PathVariable Long id , @RequestBody @Validated UserDto userDto , BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             return ResponseEntity.badRequest().body(new ErrorResponse("Error validation: " + bindingResult));
         }
-        User user = userDto.toEntity();
 
         Optional<User> optionalUser = userRepository.findById(id);
+
         if(optionalUser.isPresent()){
             User us = optionalUser.get();
+            User user = userDto.toEntity();
+
             us.setUsername(user.getUsername());
             us.setPassword(user.getPassword());
             us.setFirstName(user.getFirstName());

@@ -31,7 +31,7 @@ public class UpdatePassengerController {
         model.addAttribute("passengerId",id);
         return "updatePassenger";
     }
-    @GetMapping("/passenger/{id}")
+    @GetMapping("/passengers/{id}")
     @ResponseBody
     public ResponseEntity<?> showPassenger(@PathVariable long id){
         Optional<Passenger> optionalPassenger = passengerRepository.findById(id);
