@@ -59,6 +59,7 @@ public class UpdatePassengerController {
             pas.setPassportData(passenger.getPassportData());
             pas.setBirthDate(passenger.getBirthDate());
             pas.setGender(passenger.getGender());
+            pas.setFlight(passenger.getFlight());
 
             return ResponseEntity.of(Optional.of(passengerRepository.save(pas)));
         }
