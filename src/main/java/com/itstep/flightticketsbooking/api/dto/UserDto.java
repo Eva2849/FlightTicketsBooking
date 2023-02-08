@@ -17,17 +17,17 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class UserDto {
     @NotNull @NotBlank @Length(min = 3)
-    String username;
+    private String username;
     @NotNull @NotBlank @Length(min = 6)
-    String password;
+    private String password;
     @NotNull @NotBlank @Length(min = 3)
-    String firstName;
+    private String firstName;
     @NotNull @NotBlank @Length(min = 3)
-    String lastName;
+    private String lastName;
     @NotNull @Past
-    LocalDate birthDate;
+    private LocalDate birthDate;
     @NotNull
-    Gender gender;
+    private Gender gender;
 
     public User toEntity() {
         return new User(username, password, firstName, lastName, birthDate, gender);

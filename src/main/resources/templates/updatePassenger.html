@@ -94,22 +94,27 @@
         <h1 id="h1PassengerForm">Update flight:</h1>
     </div>
     <div id="forAddPassengers">
-        <div style="margin-top: 10px; margin-bottom: 10px;">
+<!--        <div style="margin-top: 10px; margin-bottom: 10px;">-->
+            <div >
             <div id="forName">
                 <label for="firstName">First name: </label>
-                <input type="text" id="firstName" name="firstName">
+                <input type="text" id="firstName" name="firstName" required th:value="${passenger.firstName}">
+<!--                <input type="text" id="firstName" name="firstName" required >-->
             </div>
             <div id="forLastName">
                 <label for="lastName">Last name: </label>
-                <input type="text" id="lastName" name="lastName">
+                <input type="text" id="lastName" name="lastName" required th:value="${passenger.lastName}">
+<!--                <input type="text" id="lastName" name="lastName" required >-->
             </div>
             <div id="forPassportData">
                 <label for="passportData">Passport: </label>
-                <input type="text" id="passportData" name="passportData">
+                <input type="text" id="passportData" name="passportData" required th:value="${passenger.passportData}">
+<!--                <input type="text" id="passportData" name="passportData" required >-->
             </div>
             <div id="forBirthDate">
                 <label for="birthDate">Date of birth: </label>
-                <input type="date" id="birthDate" name="birthDate">
+                <input type="datetime-local" id="birthDate" name="birthDate" required th:value="${passenger.birthDate}">
+<!--                <input type="date" id="birthDate" name="birthDate" required >-->
             </div>
             <div id="forGender">
                 <label for="gender">Gender: </label>
@@ -121,7 +126,8 @@
             </div>
             <div id="forFlightNumber">
                 <label for="flightNumber">Flight number: </label>
-                <input type="text" id="flightNumber" name="flightNumber">
+                <input type="text" id="flightNumber" name="flightNumber" required th:value="${passenger.flightNumber}">
+<!--                <input type="text" id="flightNumber" name="flightNumber" required >-->
             </div>
             <div>
                 <input type="submit" id="passengerSave" value="SAVE PASSENGER"/>
@@ -155,7 +161,7 @@
             passportData: passportDataInput.value,
             birthDate: birthDateInput.value,
             gender: genderInput.value,
-            flightNumber: flightNumberInput.value
+            flightNumber:flightNumberInput.value
         };
         console.log(passenger);
         const csrfHeaderName = csrfHeader.content;

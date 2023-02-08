@@ -27,18 +27,18 @@ public class UpdatePassengerController {
 
     @GetMapping("/{id}")
     String index(@PathVariable long id, Model model){
-        model.addAttribute("passenger", passengerRepository.findById(id));
+        model.addAttribute("passenger", passengerRepository.findById(id).orElseThrow());
         model.addAttribute("passengerId",id);
         return "updatePassenger";
     }
-    @GetMapping("/passenger/{id}")
+    @GetMapping("/passengers/{id}")
     @ResponseBody
     public ResponseEntity<?> showPassenger(@PathVariable long id){
         Optional<Passenger> optionalPassenger = passengerRepository.findById(id);
         if(optionalPassenger.isPresent()){
             return ResponseEntity.ok(optionalPassenger.get());
         }
-        return ResponseEntity.badRequest().body("Passenger not found");
+        return ResponseEntity.badRequest().body(new ErrorResponse("Passenger not found"));
     }
 
     @PutMapping("/passengers/{id}")
