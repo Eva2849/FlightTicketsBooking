@@ -99,18 +99,22 @@
             <div id="forName">
                 <label for="firstName">First name: </label>
                 <input type="text" id="firstName" name="firstName" required th:value="${passenger.firstName}">
+<!--                <input type="text" id="firstName" name="firstName" required >-->
             </div>
             <div id="forLastName">
                 <label for="lastName">Last name: </label>
                 <input type="text" id="lastName" name="lastName" required th:value="${passenger.lastName}">
+<!--                <input type="text" id="lastName" name="lastName" required >-->
             </div>
             <div id="forPassportData">
                 <label for="passportData">Passport: </label>
                 <input type="text" id="passportData" name="passportData" required th:value="${passenger.passportData}">
+<!--                <input type="text" id="passportData" name="passportData" required >-->
             </div>
             <div id="forBirthDate">
                 <label for="birthDate">Date of birth: </label>
                 <input type="datetime-local" id="birthDate" name="birthDate" required th:value="${passenger.birthDate}">
+<!--                <input type="date" id="birthDate" name="birthDate" required >-->
             </div>
             <div id="forGender">
                 <label for="gender">Gender: </label>
@@ -123,12 +127,13 @@
             <div id="forFlightNumber">
                 <label for="flightNumber">Flight number: </label>
                 <input type="text" id="flightNumber" name="flightNumber" required th:value="${passenger.flightNumber}">
+<!--                <input type="text" id="flightNumber" name="flightNumber" required >-->
             </div>
             <div>
                 <input type="submit" id="passengerSave" value="SAVE PASSENGER"/>
             </div>
             <div>
-                <a th:href="@{/adminPage}">Admin page</a>
+                <a th:href="@{/userPage}">User page</a>
             </div>
         </div>
     </div>
@@ -148,13 +153,15 @@
         const passportDataInput = document.getElementById('passportData');
         const birthDateInput = document.getElementById('birthDate');
         const genderInput = document.getElementById('gender');
+        const flightNumberInput = document.getElementById('flightNumber');
 
         const passenger = {
             firstName: firstNameInput.value,
             lastName: lastNameInput.value,
             passportData: passportDataInput.value,
             birthDate: birthDateInput.value,
-            gender: genderInput.value
+            gender: genderInput.value,
+            flightNumber:flightNumberInput.value
         };
         console.log(passenger);
         const csrfHeaderName = csrfHeader.content;
@@ -171,7 +178,7 @@
 
         console.log(response.status);
 
-        if (response.status === 201) {
+        if (response.status === 200) {
             const loc = response.headers.get('location');
             const resp = await fetch(`http://localhost:8080${loc}`)
             if (resp.status === 200) {

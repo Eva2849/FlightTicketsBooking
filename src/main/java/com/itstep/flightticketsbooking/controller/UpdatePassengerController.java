@@ -27,7 +27,7 @@ public class UpdatePassengerController {
 
     @GetMapping("/{id}")
     String index(@PathVariable long id, Model model){
-        model.addAttribute("passenger", passengerRepository.findById(id));
+        model.addAttribute("passenger", passengerRepository.findById(id).orElseThrow());
         model.addAttribute("passengerId",id);
         return "updatePassenger";
     }
@@ -38,7 +38,7 @@ public class UpdatePassengerController {
         if(optionalPassenger.isPresent()){
             return ResponseEntity.ok(optionalPassenger.get());
         }
-        return ResponseEntity.badRequest().body("Passenger not found");
+        return ResponseEntity.badRequest().body(new ErrorResponse("Passenger not found"));
     }
 
     @PutMapping("/passengers/{id}")
@@ -59,6 +59,7 @@ public class UpdatePassengerController {
             pas.setPassportData(passenger.getPassportData());
             pas.setBirthDate(passenger.getBirthDate());
             pas.setGender(passenger.getGender());
+            pas.setFlight(passenger.getFlight());
 
             return ResponseEntity.of(Optional.of(passengerRepository.save(pas)));
         }
