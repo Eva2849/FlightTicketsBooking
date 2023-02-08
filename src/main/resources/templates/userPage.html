@@ -163,38 +163,47 @@
         }
 
         #forName {
-            float: left;
-            margin-right: 35px;
-            margin-left: 40px;
-            margin-right: 47px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            margin-left: 190px;
+        }
+        #forLastName{
+            margin-top: 10px;
+            margin-bottom: 10px;
+            margin-left: 190px;
         }
 
         #forPassportData {
-            float: left;
-            margin-right: 35px;
-            margin-top: 27px;
-            margin-left: 52px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            margin-left: 202px;
         }
 
         #forBirthDate {
-            margin-top: 27px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            margin-left: 179px;
         }
 
         #forGender {
-            float: left;
-            margin-top: 27px;
-            margin-left: 63px;
-            margin-right: 90px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            margin-left: 211px;
         }
 
-        #forFlifhtNumber {
-            margin-top: 27px;
-            margin-left: 63px;
+        #forFlightNumber {
+            margin-top: 10px;
+            margin-bottom: 10px;
+            margin-left: 168px;
         }
 
         #passengerSave {
-            margin-top: 27px;
-            margin-left: 42%;
+            width: 130px;
+            height: 50px;
+            cursor: pointer;
+            background-color: rgb(99, 187, 52);
+            border-radius: 10px;
+            margin-left: 41%;
         }
 
         #sortByFlightNumber, #sortByDestination, #sortByFlightDuration, #sortByMaxNumberOfSeats {
@@ -211,6 +220,7 @@
         #sortedButtons {
             /*border: 1px solid black;*/
             margin-top: 7px;
+            margin-left: 17%;
         }
 
         #h3ForSortHead {
@@ -252,6 +262,9 @@
 
         #Flights-table2 {
 
+        }
+        a{
+            text-decoration: none;
         }
 
     </style>
@@ -305,8 +318,10 @@
     <button id="sortByFlightDuration">Flight duration</button>
     <button id="sortByMaxNumberOfSeats">Max seats</button>
 </div>
+
 <hr/>
 
+<h1>Finding</h1>
 <div id="findSeatsDiv">
     <div style="float: left;">
         <label for="numberOfSeats">How many people will fly? </label>
@@ -345,8 +360,10 @@
         </tbody>
     </table>
 </div>
+
 <hr/>
 
+<h1>Creation:</h1>
 <div id="forAddPassengers">
     <h1 id="addPassengerH1">Please enter passenger data:</h1>
     <div style="margin-top: 10px; margin-bottom: 10px;">
@@ -358,7 +375,7 @@
             <label for="lastName">Last name: </label>
             <input type="text" id="lastName" name="lastName">
         </div>
-        <div id="forPasportData">
+        <div id="forPassportData">
             <label for="passportData">Passport: </label>
             <input type="text" id="passportData" name="passportData">
         </div>
@@ -374,7 +391,7 @@
                 <option value="UNKNOWN">Unknown</option>
             </select>
         </div>
-        <div id="forFlifhtNumber">
+        <div id="forFlightNumber">
             <label for="flightNumber">Flight number: </label>
             <input type="text" id="flightNumber" name="flightNumber">
         </div>
