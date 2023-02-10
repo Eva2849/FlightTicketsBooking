@@ -142,7 +142,6 @@
     const saveUserButton = document.getElementById('userSave');
     const userMeta = document.getElementById('userId');
     const userId = userMeta.content;
-    // const baseURI = `http://localhost:8080/updateUser/${userId}`;
     const baseURI = `http://localhost:8080/updateUser`;
 
     const csrfToken = document.getElementById('csrf-token');
@@ -189,7 +188,7 @@
                 alert('Error: ' + (await resp.text()));
             }
         } else {
-            alert('Error: ' + response.status);
+            alert('Error: ' + await response.text());
             console.error(await response.json());
         }
     }

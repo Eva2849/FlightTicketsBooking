@@ -27,7 +27,7 @@ public class PassengerDto {
     private LocalDate birthDate;
     @NotNull
     private Gender gender;
-    @NotNull
+    @NotNull @NotBlank
     private String flightNumber;
 
     public Passenger toEntity(Flight flight) {
