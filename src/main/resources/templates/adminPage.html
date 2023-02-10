@@ -358,8 +358,8 @@
     <li sec:authorize="isAuthenticated()">
         Welcome <span sec:authentication="name"></span>!
     </li>
-    <li sec:authorize="isAuthenticated()">
-        <a th:href="@{/logout}">Logout</a></li>
+<!--    <li sec:authorize="isAuthenticated()">-->
+<!--        <a th:href="@{/logout}">Logout</a></li>-->
 
 </nav>
 
@@ -472,19 +472,19 @@
     <div class="addUserFormHead"><h1 id="h1ForUserForm">Create new user:</h1></div>
     <div class="toLogin">
         <label for="login">Login: </label>
-        <input type="text" id="login" name="login">
+        <input type="text" id="login" name="login" placeholder="min 3 symbols">
     </div>
     <div class="toPassword">
         <label for="password">Password: </label>
-        <input type="password" id="password" name="password">
+        <input type="password" id="password" name="password" placeholder="min 6 symbols">
     </div>
     <div class="toFirstName">
         <label for="firstName">First name: </label>
-        <input type="text" id="firstName" name="firstName">
+        <input type="text" id="firstName" name="firstName" placeholder="min 3 symbols">
     </div>
     <div class="toLastName">
         <label for="lastName">Last name: </label>
-        <input type="text" id="lastName" name="lastName">
+        <input type="text" id="lastName" name="lastName" placeholder="min 3 symbols">
     </div>
     <div class="toBirthDate">
         <label for="birthDate">Date of birth: </label>
@@ -660,7 +660,7 @@
                 alert('Error: ' + (await resp.text()));
             }
         } else {
-            alert('Error: ' + response.status);
+            alert('Error: ' +await response.text());
             console.error(await response.json());
         }
     }
@@ -705,7 +705,7 @@
                 alert('Error: ' + (await resp.text()));
             }
         } else {
-            alert('Error: ' + response.status);
+            alert('Error: ' + await response.text());
             console.error(await response.json());
         }
     }
@@ -906,9 +906,9 @@
             }
         });
         const flights = await response.json();
-        let findPlace = usrFindPlace.value;
+        let findPlace = usrFindPlace.value.toLowerCase();
         flights.sort(flight => {
-            if (flight.destination === findPlace) {
+            if (flight.destination.toLowerCase() === findPlace) {
                 addFlight2(flight);
             }
         })

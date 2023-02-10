@@ -43,9 +43,6 @@ public class UserRestController {
     @PostMapping("/passengers")
     public ResponseEntity<?> createPassenger(@RequestBody @Validated PassengerDto passengerDto, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
-//            Flight example = new Flight();
-//            example.setFlightNumber(passengerDto.getFlightNumber());
-//            Flight flight = flightRepository.findOne(Example.of(example)).orElseThrow();
             Passenger passenger = passengerDto.toEntity(flightRepository.findByFlightNumber(passengerDto.getFlightNumber()));
             try {
                 passenger = passengerRepository.save(passenger);
