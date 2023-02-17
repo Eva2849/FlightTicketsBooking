@@ -71,7 +71,7 @@ public class UserRestController {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.badRequest()
-                .body(new ErrorResponse("Flight not found"));
+                .body(new ErrorResponse("Passenger not found"));
     }
 
     @GetMapping("/flights")

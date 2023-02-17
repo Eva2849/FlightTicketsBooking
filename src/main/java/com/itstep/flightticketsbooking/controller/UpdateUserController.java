@@ -7,6 +7,7 @@ import com.itstep.flightticketsbooking.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.Banner;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,6 +20,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Controller
 public class UpdateUserController {
+    private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     @GetMapping("/{id}")
     String index(@PathVariable long id, Model model){
@@ -50,7 +52,7 @@ public class UpdateUserController {
             User user = userDto.toEntity();
 
             us.setUsername(user.getUsername());
-            us.setPassword(user.getPassword());
+            us.setPassword(passwordEncoder.encode(user.getPassword()));
             us.setFirstName(user.getFirstName());
             us.setLastName(user.getLastName());
             us.setBirthDate(user.getBirthDate());
