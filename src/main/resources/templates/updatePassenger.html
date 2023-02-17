@@ -130,7 +130,7 @@
             <div id="forFlightNumber">
                 <label for="flightNumber">Flight number: </label>
 <!--                <input type="text" id="flightNumber" name="flightNumber" required th:value="${passenger.flightNumber}">-->
-                <input type="text" id="flightNumber" name="flightNumber" required >
+                <input type="text" id="flightNumber" name="flightNumber" required th:value="${passenger.flight.flightNumber}">
             </div>
             <div>
                 <input type="submit" id="passengerSave" value="SAVE PASSENGER"/>
