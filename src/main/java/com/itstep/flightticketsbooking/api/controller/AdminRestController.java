@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +25,7 @@ import java.util.Optional;
 @RestController
 @RequiredArgsConstructor
 public class AdminRestController {
+    private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final FlightRepository flightRepository;
@@ -71,6 +73,7 @@ public class AdminRestController {
             User user = userDto.toEntity();
             try {
                 user.addRole(roleRepository.findByName("ROLE_USER"));
+                user.setPassword(passwordEncoder.encode(user.getPassword()));
                 user = userRepository.save(user);
             } catch (Exception e) {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
