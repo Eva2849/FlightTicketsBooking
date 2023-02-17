@@ -46,6 +46,9 @@ public class UserRestController {
             Passenger passenger = passengerDto.toEntity(flightRepository.findByFlightNumber(passengerDto.getFlightNumber()));
             try {
                 passenger = passengerRepository.save(passenger);
+                Flight fl = flightRepository.findByFlightNumber(passengerDto.getFlightNumber());
+                fl.setMaxNumSeats(fl.getMaxNumSeats() - 1);
+                flightRepository.save(fl);
             } catch (Exception e) {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                         .body(new ErrorResponse(e.getMessage()));
@@ -56,11 +59,15 @@ public class UserRestController {
         return ResponseEntity.badRequest()
                 .body(bindingResult.getAllErrors());
     }
+
     @DeleteMapping("/passengers/{id}")
     public ResponseEntity<?> deletePassenger(@PathVariable Long id) {
         Optional<Passenger> optionalPassenger = passengerRepository.findById(id);
         if (optionalPassenger.isPresent()) {
             passengerRepository.delete(optionalPassenger.get());
+            Flight fl = flightRepository.findByFlightNumber(optionalPassenger.get().getFlight().getFlightNumber());
+            fl.setMaxNumSeats(fl.getMaxNumSeats() + 1);
+            flightRepository.save(fl);
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.badRequest()
