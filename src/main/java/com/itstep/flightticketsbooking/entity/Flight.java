@@ -53,5 +53,6 @@ public class Flight {
 
     public void addPassenger(Passenger passenger) {
         passengers.add(passenger);
+        passenger.setFlight(this);
     }
 }
