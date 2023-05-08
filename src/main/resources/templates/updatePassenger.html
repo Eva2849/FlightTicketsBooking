@@ -94,7 +94,7 @@
 <body style="font-family: sans-serif;">
 <div class="totalDiv">
     <div id="headPassengerForm">
-        <h1 id="h1PassengerForm">Update passenger:</h1>
+        <h1 id="h1PassengerForm">Update Passenger:</h1>
     </div>
     <div id="forAddPassengers">
 <!--        <div style="margin-top: 10px; margin-bottom: 10px;">-->
@@ -127,11 +127,12 @@
                     <option value="UNKNOWN">Unknown</option>
                 </select>
             </div>
-            <div id="forFlightNumber">
-                <label for="flightNumber">Flight number: </label>
-<!--                <input type="text" id="flightNumber" name="flightNumber" required th:value="${passenger.flightNumber}">-->
-                <input type="text" id="flightNumber" name="flightNumber" required th:value="${passenger.flight.flightNumber}">
-            </div>
+                <div id="forFlightNumber">
+                    <label for="flightNumber">Flight number: </label>
+                    <!--                <input type="text" id="flightNumber" name="flightNumber" required th:value="${passenger.flightNumber}">-->
+                    <input type="text" id="flightNumber" name="flightNumber" required th:value="${passenger.flight.flightNumber}">
+                </div>
+                <div>
             <div>
                 <input type="submit" id="passengerSave" value="SAVE PASSENGER"/>
             </div>
