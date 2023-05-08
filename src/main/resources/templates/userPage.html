@@ -395,7 +395,7 @@
             <label for="flightNumber">Flight number: </label>
             <input type="text" id="flightNumber" name="flightNumber">
         </div>
-        <div>
+
             <input type="submit" id="passengerSave" value="SAVE PASSENGER"/>
         </div>
     </div>
@@ -694,6 +694,34 @@
             console.log(response.status)
             if (response.status === 204) {
                 e.target.parentElement.parentElement.remove();
+            } else {
+                alert("Error")
+            }
+        }
+    });
+    passengersTable.addEventListener('click', async function (e) {
+        if (e.target.nodeName === 'BUTTON' && e.target.classList.contains('update')) {
+            console.log('update', e.target)
+
+            const id = e.target.parentElement.parentElement.firstElementChild.innerHTML;
+            console.log(id)
+
+            const csrfHeaderName = csrfHeader.content;
+            const csrfTokenValue = csrfToken.content;
+
+            const response = await fetch(`${baseURI}/passenger/${id}`, {
+                method: 'PUT',
+                headers: {
+                    [csrfHeaderName]: csrfTokenValue
+                },
+
+            });
+
+            console.log(response.status)
+            if (response.status === 200) {
+                let flight = await response.json();
+                console.log(flight);
+                addFlight(flight)
             } else {
                 alert("Error")
             }
